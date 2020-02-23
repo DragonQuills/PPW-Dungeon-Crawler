@@ -7,7 +7,15 @@ template.
 If Python and Arcade are installed, this example can be run from the command line with:
 python -m arcade.examples.starting_template
 """
+# import sys
+# sys.path.insert(1, '/Actors')
+# sys.path.insert(1, '/Behaviors')
+# sys.path.insert(1, '/Maps')
+# sys.path.insert(1, '/Spawners')
+
 import arcade
+from Actors.Monster import Monster
+from Behaviors.Animator import Animator
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
