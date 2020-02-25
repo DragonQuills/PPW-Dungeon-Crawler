@@ -36,16 +36,7 @@ class MyGame(arcade.Window):
         # If you have sprite lists, you should create them here,
         # and set them to None
 
-        map = DungeonMap(ROW_COUNT, COLUMN_COUNT)
-
-        self.shape_list = arcade.ShapeElementList()
-        for row in range(ROW_COUNT):
-            for col in range(COLUMN_COUNT):
-                x = (MARGIN + WIDTH) * col + MARGIN + WIDTH // 2
-                y = (MARGIN + HEIGHT) * row + MARGIN + HEIGHT // 2
-
-                current_rect = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, map.grid[row][col])
-                self.shape_list.append(current_rect)
+        self.map = DungeonMap()
 
         self.player_x = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
         self.player_y = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
@@ -65,7 +56,7 @@ class MyGame(arcade.Window):
         arcade.start_render()
 
         # Call draw() on all your sprite lists below
-        self.shape_list.draw()
+        self.map.draw()
         self.player.draw()
 
     def on_update(self, delta_time):
