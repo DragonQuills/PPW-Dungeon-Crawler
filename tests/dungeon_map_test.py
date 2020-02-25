@@ -1,6 +1,9 @@
 from Maps.DungeonMap import *
 
+import pytest
+
 a = arcade.Window()
+a.test()
 
 def test_map_instantiation():
     map = DungeonMap();
