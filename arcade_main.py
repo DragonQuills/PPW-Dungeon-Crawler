@@ -35,6 +35,7 @@ SCREEN_HEIGHT = (HEIGHT + MARGIN) * ROW_COUNT + MARGIN
 SCREEN_TITLE = "Dungeon Delve"
 
 
+
 class MyGame(arcade.Window):
     """
     Main application class.
@@ -63,6 +64,10 @@ class MyGame(arcade.Window):
                 current_rect = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, map.grid[row][col])
                 self.shape_list.append(current_rect)
 
+        self.player_x = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
+        self.player_y = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
+        self.player = arcade.create_rectangle_filled(self.player_x, self.player_y, WIDTH, HEIGHT, arcade.color.TEAL)
+
     def setup(self):
         # Create your sprites and sprite lists here
         pass
@@ -78,6 +83,7 @@ class MyGame(arcade.Window):
 
         # Call draw() on all your sprite lists below
         self.shape_list.draw()
+        self.player.draw()
 
     def on_update(self, delta_time):
         """
@@ -85,16 +91,20 @@ class MyGame(arcade.Window):
         Normally, you'll call update() on the sprite lists that
         need it.
         """
+        self.player = arcade.create_rectangle_filled(self.player_x, self.player_y, WIDTH, HEIGHT, arcade.color.TEAL)
         pass
 
-    def on_key_press(self, key, key_modifiers):
-        """
-        Called whenever a key on the keyboard is pressed.
+    def on_key_press(self, key, modifiers):
+        """Called whenever a key is pressed. """
 
-        For a full list of keys, see:
-        http://arcade.academy/arcade.key.html
-        """
-        pass
+        if key == arcade.key.UP:
+            self.player_y += (MARGIN+HEIGHT)
+        elif key == arcade.key.DOWN:
+            self.player_y -= (MARGIN+HEIGHT)
+        elif key == arcade.key.LEFT:
+            self.player_x -= (MARGIN+HEIGHT)
+        elif key == arcade.key.RIGHT:
+            self.player_x += (MARGIN+HEIGHT)
 
     def on_key_release(self, key, key_modifiers):
         """
