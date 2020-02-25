@@ -1,5 +1,7 @@
 from Maps.DungeonMap import *
 
+a = arcade.Window()
+
 def test_map_instantiation():
     map = DungeonMap();
     grid = map.grid
@@ -12,7 +14,7 @@ def test_map_instantiation():
     for i in range(ROW_COUNT):
         assert(grid[i][0] == WALL) #left col
         assert(grid[i][COLUMN_COUNT-1] == WALL) #right col
-        
+
     #test inside is floors
     for i in range(1, ROW_COUNT-1):
         for j in range(1, COLUMN_COUNT-1):
