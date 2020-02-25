@@ -13,7 +13,6 @@ python -m arcade.examples.starting_template
 # sys.path.insert(1, '/Maps')
 # sys.path.insert(1, '/Spawners')
 
-import arcade
 from definitions import *
 
 from Maps.DungeonMap import DungeonMap

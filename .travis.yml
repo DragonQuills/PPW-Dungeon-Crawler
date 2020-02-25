@@ -2,6 +2,10 @@ language: python3
 
 script:
   - pytest
+  
+dist: xenial
+services:
+  - xvfb
 
 before_install:
   - sudo apt-get install freeglut3-dev
