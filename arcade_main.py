@@ -14,26 +14,9 @@ python -m arcade.examples.starting_template
 # sys.path.insert(1, '/Spawners')
 
 import arcade
+from definitions import *
+
 from Maps.DungeonMap import DungeonMap
-
-
-# Set how many rows and columns we will have
-ROW_COUNT = 10
-COLUMN_COUNT = 10
-
-# This sets the WIDTH and HEIGHT of each grid location
-WIDTH = 64
-HEIGHT = 64
-
-# This sets the margin between each cell
-# and on the edges of the screen.
-MARGIN = 1
-
-# Do the math to figure out our screen dimensions
-SCREEN_WIDTH = (WIDTH + MARGIN) * COLUMN_COUNT + MARGIN
-SCREEN_HEIGHT = (HEIGHT + MARGIN) * ROW_COUNT + MARGIN
-SCREEN_TITLE = "Dungeon Delve"
-
 
 
 class MyGame(arcade.Window):
@@ -105,12 +88,6 @@ class MyGame(arcade.Window):
             self.player_x -= (MARGIN+HEIGHT)
         elif key == arcade.key.RIGHT:
             self.player_x += (MARGIN+HEIGHT)
-
-    def on_key_release(self, key, key_modifiers):
-        """
-        Called whenever the user lets off a previously pressed key.
-        """
-        pass
 
 
 def main():
