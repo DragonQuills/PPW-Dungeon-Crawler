@@ -14,12 +14,25 @@ python -m arcade.examples.starting_template
 # sys.path.insert(1, '/Spawners')
 
 import arcade
-from Actors.Monster import Monster
-from Behaviors.Animator import Animator
+from Maps.DungeonMap import DungeonMap
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-SCREEN_TITLE = "Starting Template"
+
+# Set how many rows and columns we will have
+ROW_COUNT = 10
+COLUMN_COUNT = 10
+
+# This sets the WIDTH and HEIGHT of each grid location
+WIDTH = 64
+HEIGHT = 64
+
+# This sets the margin between each cell
+# and on the edges of the screen.
+MARGIN = 1
+
+# Do the math to figure out our screen dimensions
+SCREEN_WIDTH = (WIDTH + MARGIN) * COLUMN_COUNT + MARGIN
+SCREEN_HEIGHT = (HEIGHT + MARGIN) * ROW_COUNT + MARGIN
+SCREEN_TITLE = "Dungeon Delve"
 
 
 class MyGame(arcade.Window):
@@ -39,6 +52,17 @@ class MyGame(arcade.Window):
         # If you have sprite lists, you should create them here,
         # and set them to None
 
+        map = DungeonMap(ROW_COUNT, COLUMN_COUNT)
+
+        self.shape_list = arcade.ShapeElementList()
+        for row in range(ROW_COUNT):
+            for col in range(COLUMN_COUNT):
+                x = (MARGIN + WIDTH) * col + MARGIN + WIDTH // 2
+                y = (MARGIN + HEIGHT) * row + MARGIN + HEIGHT // 2
+
+                current_rect = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, map.grid[row][col])
+                self.shape_list.append(current_rect)
+
     def setup(self):
         # Create your sprites and sprite lists here
         pass
@@ -53,6 +77,7 @@ class MyGame(arcade.Window):
         arcade.start_render()
 
         # Call draw() on all your sprite lists below
+        self.shape_list.draw()
 
     def on_update(self, delta_time):
         """
