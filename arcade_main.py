@@ -34,14 +34,15 @@ class MyGame(arcade.Window):
 
         # If you have sprite lists, you should create them here,
         # and set them to None
-
         self.map = DungeonMap()
+
 
         self.player_x = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
         self.player_y = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
         self.player = arcade.create_rectangle_filled(self.player_x, self.player_y, WIDTH, HEIGHT, arcade.color.TEAL)
 
     def setup(self):
+        self.map.update_dungeon()
         # Create your sprites and sprite lists here
         pass
 

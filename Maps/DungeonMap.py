@@ -19,7 +19,7 @@ class DungeonMap():
             for col in range(1, COLUMN_COUNT-1):
                 self.grid[row][col] = FLOOR
 
-    def update_dungeon():
+    def update_dungeon(self):
         # now make the actual grid that will be displayed
         self.shape_list = arcade.ShapeElementList()
         for row in range(ROW_COUNT):
