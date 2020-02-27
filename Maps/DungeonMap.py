@@ -7,6 +7,7 @@ class DungeonMap():
     def __init__(self):
         #create the array of what the tule types are
         self.grid = []
+        self.shape_list = None
         for row in range(ROW_COUNT):
             self.grid.append([])
 
@@ -18,6 +19,7 @@ class DungeonMap():
             for col in range(1, COLUMN_COUNT-1):
                 self.grid[row][col] = FLOOR
 
+    def update_dungeon():
         # now make the actual grid that will be displayed
         self.shape_list = arcade.ShapeElementList()
         for row in range(ROW_COUNT):
