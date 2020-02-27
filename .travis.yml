@@ -3,8 +3,8 @@ language: python3
 script:
   - pytest
 
-dist: xenial
-services: xvfb
+install:
+  - python3 -m pip install -r requirments.txt
 
 addons:
   apt:
