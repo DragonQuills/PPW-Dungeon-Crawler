@@ -17,3 +17,14 @@ def test_map_instantiation():
     for i in range(1, ROW_COUNT-1):
         for j in range(1, COLUMN_COUNT-1):
             assert(grid[i][j] == FLOOR)
+
+def test_get_tile_type():
+    map = DungeonMap();
+
+    assert(map.get_tile_type(33, 33) == WALL) # works when given the center of the square
+    assert(map.get_tile_type(34, 34) == WALL) #works when given something off center
+    assert(map.get_tile_type(98, 98) == FLOOR) # works when given the center of the square
+    assert(map.get_tile_type(99, 99) == FLOOR) #works when given something off center
+
+    assert(map.get_tile_type(1000000, 1000000) == WALL) #no error and returns wall if off screen to upper right
+    assert(map.get_tile_type(-1000000, -1000000) == WALL) #no error and returns wall if off screen to lower left

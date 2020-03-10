@@ -16,3 +16,7 @@ MARGIN = 1
 SCREEN_WIDTH = (WIDTH + MARGIN) * COLUMN_COUNT + MARGIN
 SCREEN_HEIGHT = (HEIGHT + MARGIN) * ROW_COUNT + MARGIN
 SCREEN_TITLE = "Dungeon Delve"
+
+#Colors for the dungeon tiles
+FLOOR = arcade.color.ASH_GREY
+WALL = arcade.color.BLACK

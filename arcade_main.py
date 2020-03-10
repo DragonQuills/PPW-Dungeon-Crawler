@@ -7,11 +7,6 @@ template.
 If Python and Arcade are installed, this example can be run from the command line with:
 python -m arcade.examples.starting_template
 """
-# import sys
-# sys.path.insert(1, '/Actors')
-# sys.path.insert(1, '/Behaviors')
-# sys.path.insert(1, '/Maps')
-# sys.path.insert(1, '/Spawners')
 
 from definitions import *
 
@@ -38,7 +33,9 @@ class MyGame(arcade.Window):
 
 
         self.player_x = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
+        print(self.player_x)
         self.player_y = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
+        print(self.player_y)
         self.player = arcade.create_rectangle_filled(self.player_x, self.player_y, WIDTH, HEIGHT, arcade.color.TEAL)
 
     def setup(self):
@@ -79,6 +76,9 @@ class MyGame(arcade.Window):
             self.player_x -= (MARGIN+HEIGHT)
         elif key == arcade.key.RIGHT:
             self.player_x += (MARGIN+HEIGHT)
+        print(self.player_x)
+        print(self.player_y)
+        print(self.map.get_tile_type(self.player_x, self.player_y))
 
 
 def main():
