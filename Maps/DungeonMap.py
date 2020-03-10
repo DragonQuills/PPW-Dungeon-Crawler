@@ -33,7 +33,7 @@ class DungeonMap():
         column = int(x // (WIDTH + MARGIN))
         row = int(y // (HEIGHT + MARGIN))
 
-        if row < ROW_COUNT and column < COLUMN_COUNT:
+        if (row < ROW_COUNT and column < COLUMN_COUNT) and (row >= 0 and column >= 0):
             return self.grid[row][column]
         else:
             return WALL
