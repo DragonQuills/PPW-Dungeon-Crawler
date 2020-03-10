@@ -1,8 +1,5 @@
 from definitions import *
 
-FLOOR = arcade.color.ASH_GREY
-WALL = arcade.color.BLACK
-
 class DungeonMap():
     def __init__(self):
         #create the array of what the tule types are
@@ -29,6 +26,18 @@ class DungeonMap():
 
                 current_rect = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, self.grid[row][col])
                 self.shape_list.append(current_rect)
+
+    def get_tile_type(self, x, y):
+        # Code from https://arcade.academy/examples/array_backed_grid_buffered.html#array-backed-grid-buffered
+        # Change the x/y screen coordinates to grid coordinates
+        column = int(x // (WIDTH + MARGIN))
+        row = int(y // (HEIGHT + MARGIN))
+
+        if row < ROW_COUNT and column < COLUMN_COUNT:
+            return self.grid[row][column]
+        else:
+            return WALL
+
 
     def draw(self):
         self.shape_list.draw()
