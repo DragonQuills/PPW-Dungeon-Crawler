@@ -22,6 +22,10 @@ class Player(arcade.Sprite):
         icon = arcade.create_rectangle_filled(self.x, self.y, WIDTH, HEIGHT, arcade.color.TEAL)
         icon.draw()
 
+    def move(self, direction):
+        self.x += direction[0]
+        self.y += direction[1]
+
 
 
 class MyGame(arcade.Window):
@@ -74,13 +78,13 @@ class MyGame(arcade.Window):
         """Called whenever a key is pressed. """
 
         if key == arcade.key.UP:
-            self.player.y += (MARGIN+HEIGHT)
+            self.player.move(UP)
         elif key == arcade.key.DOWN:
-            self.player.y -= (MARGIN+HEIGHT)
+            self.player.move(DOWN)
         elif key == arcade.key.LEFT:
-            self.player.x -= (MARGIN+HEIGHT)
+            self.player.move(LEFT)
         elif key == arcade.key.RIGHT:
-            self.player.x += (MARGIN+HEIGHT)
+            self.player.move(RIGHT)
         print(self.player.x)
         print(self.player.y)
         print(self.map.get_tile_type(self.player.x, self.player.y))
