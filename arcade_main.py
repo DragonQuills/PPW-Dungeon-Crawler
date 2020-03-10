@@ -13,13 +13,9 @@ python -m arcade.examples.starting_template
 # sys.path.insert(1, '/Maps')
 # sys.path.insert(1, '/Spawners')
 
-import arcade
-from Actors.Monster import Monster
-from Behaviors.Animator import Animator
+from definitions import *
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-SCREEN_TITLE = "Starting Template"
+from Maps.DungeonMap import DungeonMap
 
 
 class MyGame(arcade.Window):
@@ -38,8 +34,15 @@ class MyGame(arcade.Window):
 
         # If you have sprite lists, you should create them here,
         # and set them to None
+        self.map = DungeonMap()
+
+
+        self.player_x = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
+        self.player_y = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
+        self.player = arcade.create_rectangle_filled(self.player_x, self.player_y, WIDTH, HEIGHT, arcade.color.TEAL)
 
     def setup(self):
+        self.map.update_dungeon()
         # Create your sprites and sprite lists here
         pass
 
@@ -53,6 +56,8 @@ class MyGame(arcade.Window):
         arcade.start_render()
 
         # Call draw() on all your sprite lists below
+        self.map.draw()
+        self.player.draw()
 
     def on_update(self, delta_time):
         """
@@ -60,22 +65,20 @@ class MyGame(arcade.Window):
         Normally, you'll call update() on the sprite lists that
         need it.
         """
+        self.player = arcade.create_rectangle_filled(self.player_x, self.player_y, WIDTH, HEIGHT, arcade.color.TEAL)
         pass
 
-    def on_key_press(self, key, key_modifiers):
-        """
-        Called whenever a key on the keyboard is pressed.
+    def on_key_press(self, key, modifiers):
+        """Called whenever a key is pressed. """
 
-        For a full list of keys, see:
-        http://arcade.academy/arcade.key.html
-        """
-        pass
-
-    def on_key_release(self, key, key_modifiers):
-        """
-        Called whenever the user lets off a previously pressed key.
-        """
-        pass
+        if key == arcade.key.UP:
+            self.player_y += (MARGIN+HEIGHT)
+        elif key == arcade.key.DOWN:
+            self.player_y -= (MARGIN+HEIGHT)
+        elif key == arcade.key.LEFT:
+            self.player_x -= (MARGIN+HEIGHT)
+        elif key == arcade.key.RIGHT:
+            self.player_x += (MARGIN+HEIGHT)
 
 
 def main():
