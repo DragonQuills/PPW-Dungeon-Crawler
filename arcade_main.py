@@ -12,6 +12,7 @@ from definitions import *
 
 from Maps.DungeonMap import DungeonMap
 from Actors.Player import Player
+from Actors.Monster import *
 
 def player_wall_collision(player, direction, map):
     return(map.get_tile_type(player.x+direction[0], player.y+direction[1]) == WALL)
@@ -37,6 +38,7 @@ class MyGame(arcade.Window):
         self.map = DungeonMap()
 
         self.player = Player()
+        self.lampy = LampMonster((MARGIN + HEIGHT) *4 + MARGIN + HEIGHT // 2, (MARGIN + HEIGHT) * 4 + MARGIN + HEIGHT // 2)
 
     def setup(self):
         self.map.update_dungeon()
@@ -55,6 +57,7 @@ class MyGame(arcade.Window):
         # Call draw() on all your sprite lists below
         self.map.draw()
         self.player.draw()
+        self.lampy.draw()
 
     def on_update(self, delta_time):
         """
