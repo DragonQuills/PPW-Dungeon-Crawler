@@ -25,3 +25,6 @@ def test_get_tile_type():
     assert(map.get_tile_type(34, 34) == WALL) #works when given something off center
     assert(map.get_tile_type(98, 98) == FLOOR) # works when given the center of the square
     assert(map.get_tile_type(99, 99) == FLOOR) #works when given something off center
+
+    assert(map.get_tile_type(1000000, 1000000) == WALL) #no error and returns wall if off screen to upper right
+    assert(map.get_tile_type(-1000000, -1000000) == WALL) #no error and returns wall if off screen to lower left
