@@ -13,6 +13,17 @@ from definitions import *
 from Maps.DungeonMap import DungeonMap
 
 
+class Player(arcade.Sprite):
+    def __init__(self):
+        self.x = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
+        self.y = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
+
+    def draw(self):
+        icon = arcade.create_rectangle_filled(self.x, self.y, WIDTH, HEIGHT, arcade.color.TEAL)
+        icon.draw()
+
+
+
 class MyGame(arcade.Window):
     """
     Main application class.
@@ -31,12 +42,7 @@ class MyGame(arcade.Window):
         # and set them to None
         self.map = DungeonMap()
 
-
-        self.player_x = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
-        print(self.player_x)
-        self.player_y = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
-        print(self.player_y)
-        self.player = arcade.create_rectangle_filled(self.player_x, self.player_y, WIDTH, HEIGHT, arcade.color.TEAL)
+        self.player = Player()
 
     def setup(self):
         self.map.update_dungeon()
@@ -62,23 +68,22 @@ class MyGame(arcade.Window):
         Normally, you'll call update() on the sprite lists that
         need it.
         """
-        self.player = arcade.create_rectangle_filled(self.player_x, self.player_y, WIDTH, HEIGHT, arcade.color.TEAL)
         pass
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
 
         if key == arcade.key.UP:
-            self.player_y += (MARGIN+HEIGHT)
+            self.player.y += (MARGIN+HEIGHT)
         elif key == arcade.key.DOWN:
-            self.player_y -= (MARGIN+HEIGHT)
+            self.player.y -= (MARGIN+HEIGHT)
         elif key == arcade.key.LEFT:
-            self.player_x -= (MARGIN+HEIGHT)
+            self.player.x -= (MARGIN+HEIGHT)
         elif key == arcade.key.RIGHT:
-            self.player_x += (MARGIN+HEIGHT)
-        print(self.player_x)
-        print(self.player_y)
-        print(self.map.get_tile_type(self.player_x, self.player_y))
+            self.player.x += (MARGIN+HEIGHT)
+        print(self.player.x)
+        print(self.player.y)
+        print(self.map.get_tile_type(self.player.x, self.player.y))
 
 
 def main():
