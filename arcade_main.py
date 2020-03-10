@@ -13,6 +13,10 @@ from definitions import *
 from Maps.DungeonMap import DungeonMap
 from Actors.Player import Player
 
+def player_wall_collision(player, direction, map):
+    return(map.get_tile_type(player.x+direction[0], player.y+direction[1]) == WALL)
+
+
 
 class MyGame(arcade.Window):
     """
@@ -64,13 +68,17 @@ class MyGame(arcade.Window):
         """Called whenever a key is pressed. """
 
         if key == arcade.key.UP:
-            self.player.move(UP)
+            if(not player_wall_collision(self.player, UP, self.map)):
+                self.player.move(UP)
         elif key == arcade.key.DOWN:
-            self.player.move(DOWN)
+            if(not player_wall_collision(self.player, DOWN, self.map)):
+                self.player.move(DOWN)
         elif key == arcade.key.LEFT:
-            self.player.move(LEFT)
+            if(not player_wall_collision(self.player, LEFT, self.map)):
+                self.player.move(LEFT)
         elif key == arcade.key.RIGHT:
-            self.player.move(RIGHT)
+            if(not player_wall_collision(self.player, RIGHT, self.map)):
+                self.player.move(RIGHT)
         print(self.player.x)
         print(self.player.y)
         print(self.map.get_tile_type(self.player.x, self.player.y))
