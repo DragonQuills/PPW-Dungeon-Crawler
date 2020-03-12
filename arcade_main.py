@@ -12,16 +12,17 @@ from definitions import *
 
 from Maps.DungeonMap import DungeonMap
 from Actors.Player import Player
+from Actors.Monster import *
 
 def player_wall_collision(player, direction, map):
-    return(map.get_tile_type(player.x+direction[0], player.y+direction[1]) != FLOOR)
+    return(map.get_tile_type(player.row+direction[0], player.col+direction[1]) != FLOOR)
 
 
 
 class MyGame(arcade.Window):
     """
     Main application class.
-
+player
     NOTE: Go ahead and delete the methods you don't need.
     If you do need a method, delete the 'pass' and replace it
     with your own code. Don't leave 'pass' in this program.
@@ -37,7 +38,7 @@ class MyGame(arcade.Window):
         self.map = DungeonMap()
 
         self.player = Player()
-        self.monsters = []
+        self.monsters = [LampMonster(4, 4, self.map)]
 
     def setup(self):
         self.monsters.append(self.player)
@@ -57,6 +58,7 @@ class MyGame(arcade.Window):
         # Call draw() on all your sprite lists below
         self.map.draw()
         self.player.draw()
+        self.lampy.draw()
 
     def on_update(self, delta_time):
         """
@@ -73,18 +75,19 @@ class MyGame(arcade.Window):
         if key == arcade.key.UP:
             if(not player_wall_collision(self.player, UP, self.map)):
                 self.player.move(UP)
+                self.lampy.move(self.player)
         elif key == arcade.key.DOWN:
             if(not player_wall_collision(self.player, DOWN, self.map)):
                 self.player.move(DOWN)
+                self.lampy.move(self.player)
         elif key == arcade.key.LEFT:
             if(not player_wall_collision(self.player, LEFT, self.map)):
                 self.player.move(LEFT)
+                self.lampy.move(self.player)
         elif key == arcade.key.RIGHT:
             if(not player_wall_collision(self.player, RIGHT, self.map)):
                 self.player.move(RIGHT)
-        print(self.player.x)
-        print(self.player.y)
-        print(self.map.get_tile_type(self.player.x, self.player.y))
+                self.lampy.move(self.player)
 
 
 def main():

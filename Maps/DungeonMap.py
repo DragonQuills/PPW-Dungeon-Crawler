@@ -22,14 +22,12 @@ class DungeonMap():
             self.grid[actor.row][actor.col] = ACTOR
 
 
-    def get_tile_type(self, x, y):
+    def get_tile_type(self, row, col):
         # Code from https://arcade.academy/examples/array_backed_grid_buffered.html#array-backed-grid-buffered
         # Change the x/y screen coordinates to grid coordinates
-        column = int(x // (WIDTH + MARGIN))
-        row = int(y // (HEIGHT + MARGIN))
 
-        if (row < ROW_COUNT and column < COLUMN_COUNT) and (row >= 0 and column >= 0):
-            return self.grid[row][column]
+        if (row < ROW_COUNT and col < COLUMN_COUNT) and (row >= 0 and col >= 0):
+            return self.grid[row][col]
         else:
             return WALL
 
