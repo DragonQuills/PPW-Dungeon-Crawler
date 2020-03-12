@@ -15,7 +15,7 @@ from Actors.Player import Player
 from Actors.Monster import *
 
 def player_wall_collision(player, direction, map):
-    return(map.get_tile_type(player.row+direction[0], player.col+direction[1]) == WALL)
+    return(map.get_tile_type(player.row+direction[0], player.col+direction[1]) != FLOOR)
 
 
 
@@ -38,10 +38,11 @@ player
         self.map = DungeonMap()
 
         self.player = Player()
-        self.lampy = LampMonster(4, 4, self.map)
+        self.monsters = [LampMonster(4, 4, self.map)]
 
     def setup(self):
-        self.map.update_dungeon()
+        self.monsters.append(self.player)
+        self.map.update_dungeon(self.monsters)
         # Create your sprites and sprite lists here
         pass
 
@@ -65,6 +66,7 @@ player
         Normally, you'll call update() on the sprite lists that
         need it.
         """
+        self.map.update_dungeon(self.monsters.append(self.player))
         pass
 
     def on_key_press(self, key, modifiers):

@@ -65,6 +65,7 @@ class MonsterAI:
 
 
     def reconstruct_path(self, monster, player, prev):
+        # print("in reconstruct path")
         start = Position(monster.row, monster.col)
         end = Position(player.row, player.col)
         path = []
