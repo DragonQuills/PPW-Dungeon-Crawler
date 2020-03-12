@@ -38,7 +38,8 @@ player
         self.map = DungeonMap()
 
         self.player = Player()
-        self.lampy = LampMonster(4, 4)
+        self.lampy = LampMonster(4, 4, self.map)
+        self.lampy.ai.solve(self.lampy, self.player)
 
     def setup(self):
         self.map.update_dungeon()
