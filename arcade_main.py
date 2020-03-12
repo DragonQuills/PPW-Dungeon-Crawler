@@ -15,7 +15,7 @@ from Actors.Player import Player
 from Actors.Monster import *
 
 def player_wall_collision(player, direction, map):
-    return(map.get_tile_type(player.x+direction[0], player.y+direction[1]) == WALL)
+    return(map.get_tile_type(player.row+direction[0], player.col+direction[1]) == WALL)
 
 
 
@@ -38,7 +38,7 @@ player
         self.map = DungeonMap()
 
         self.player = Player()
-        self.lampy = LampMonster((MARGIN + HEIGHT) *4 + MARGIN + HEIGHT // 2, (MARGIN + HEIGHT) * 4 + MARGIN + HEIGHT // 2)
+        self.lampy = LampMonster(4, 4)
 
     def setup(self):
         self.map.update_dungeon()

@@ -2,7 +2,7 @@ from Actors.Actor import *
 
 class Player(Actor):
     def __init__(self):
-        x = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
-        y = (MARGIN + HEIGHT)+ MARGIN + HEIGHT // 2
+        row = 1
+        col = 1
 
-        super().__init__(x, y, arcade.color.TEAL)
+        super().__init__(row, col, arcade.color.TEAL)

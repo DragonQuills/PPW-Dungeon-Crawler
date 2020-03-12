@@ -21,7 +21,7 @@ SCREEN_TITLE = "Dungeon Delve"
 FLOOR = arcade.color.ASH_GREY
 WALL = arcade.color.BLACK
 
-UP = [0, MARGIN + HEIGHT]
-DOWN = [0, -(MARGIN + HEIGHT)]
-LEFT = [-(MARGIN + WIDTH), 0]
-RIGHT = [(MARGIN + WIDTH), 0]
+UP = [1, 0]
+DOWN = [-1, 0]
+LEFT = [0, -1]
+RIGHT = [0, 1]
