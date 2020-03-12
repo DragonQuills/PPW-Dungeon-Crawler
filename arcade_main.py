@@ -39,9 +39,6 @@ player
 
         self.player = Player()
         self.lampy = LampMonster(4, 4, self.map)
-        prev = self.lampy.ai.solve(self.lampy, self.player)
-        path = self.lampy.ai.reconstruct_path(self.lampy, self.player, prev)
-        print(path)
 
     def setup(self):
         self.map.update_dungeon()
@@ -76,18 +73,19 @@ player
         if key == arcade.key.UP:
             if(not player_wall_collision(self.player, UP, self.map)):
                 self.player.move(UP)
+                self.lampy.move(self.player)
         elif key == arcade.key.DOWN:
             if(not player_wall_collision(self.player, DOWN, self.map)):
                 self.player.move(DOWN)
+                self.lampy.move(self.player)
         elif key == arcade.key.LEFT:
             if(not player_wall_collision(self.player, LEFT, self.map)):
                 self.player.move(LEFT)
+                self.lampy.move(self.player)
         elif key == arcade.key.RIGHT:
             if(not player_wall_collision(self.player, RIGHT, self.map)):
                 self.player.move(RIGHT)
-        print(self.player.x)
-        print(self.player.y)
-        print(self.map.get_tile_type(self.player.x, self.player.y))
+                self.lampy.move(self.player)
 
 
 def main():

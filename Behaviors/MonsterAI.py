@@ -5,13 +5,18 @@ class Position:
     def __init__(self, row, col):
         self.row = row
         self.col = col
+
     def __eq__(self, other):
         if isinstance(other, Position):
             return self.row == other.row and self.col == other.col
         else:
             return False
+
     def __ne__(self, other):
         return not self == other
+
+    def __str__(self):
+        return "(" + str(self.row) + ", "  + str(self.col) + ")"
 
 
 class MonsterAI:
@@ -64,6 +69,7 @@ class MonsterAI:
 
 
     def reconstruct_path(self, monster, player, prev):
+        # print("in reconstruct path")
         start = Position(monster.row, monster.col)
         end = Position(player.row, player.col)
         path = []
@@ -82,5 +88,14 @@ class MonsterAI:
         else:
             return []
 
-    def next_move(monster, player):
-        pass
+    def next_move(self, monster, player):
+        prev = self.solve(monster, player)
+        path = self.reconstruct_path(monster, player, prev)
+        player_position = Position(player.row, player.col)
+
+        if(not path == []): # if there is a path to the player
+            if(not player_position == path[1]): #if the monster is not right next to the player
+                print("The direction to move is: ", path[1])
+                return path[1]
+        #the monster shouldn't try to move since it's either trapped or next to the player.
+        return path[0]
