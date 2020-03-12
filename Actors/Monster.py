@@ -6,6 +6,11 @@ class Monster(Actor):
         super().__init__(row, col, color)
         self.ai = MonsterAI(dungeon_map)
 
+    def move(self, player):
+        next_move = self.ai.next_move(self, player)
+        self.row = next_move.row
+        self.col = next_move.col
+
 class SkullMonster(Monster):
     def __init__(self, row, col, dungeon_map):
         super().__init__(row, col, arcade.color.BONE, dungeon_map)
