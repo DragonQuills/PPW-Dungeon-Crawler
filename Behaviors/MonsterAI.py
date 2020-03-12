@@ -1,5 +1,6 @@
 from definitions import *
-from queue import Queue
+from queue import Queue #for BFS
+import random # for shuffling the directional array
 
 class Position:
     def __init__(self, row, col):
@@ -52,7 +53,11 @@ class MonsterAI:
 
             #get valid moves
             neighbors = []
-            for i in [UP, DOWN, LEFT, RIGHT]:
+            directions = [UP, DOWN, LEFT, RIGHT]
+            # Comment next line to make monsters follow player more directly
+            random.shuffle(directions)
+
+            for i in directions:
                 if self.dungeon_map.get_tile_type(p.row+i[0], p.col+i[1]) == FLOOR: #the spot next to the current spot is a floor
                     neighbors.append(Position(p.row+i[0], p.col+i[1]))
 
