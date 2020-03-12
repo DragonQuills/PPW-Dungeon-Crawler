@@ -39,7 +39,9 @@ player
 
         self.player = Player()
         self.lampy = LampMonster(4, 4, self.map)
-        self.lampy.ai.solve(self.lampy, self.player)
+        prev = self.lampy.ai.solve(self.lampy, self.player)
+        path = self.lampy.ai.reconstruct_path(self.lampy, self.player, prev)
+        print(path)
 
     def setup(self):
         self.map.update_dungeon()

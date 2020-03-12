@@ -5,6 +5,13 @@ class Position:
     def __init__(self, row, col):
         self.row = row
         self.col = col
+    def __eq__(self, other):
+        if isinstance(other, Position):
+            return self.row == other.row and self.col == other.col
+        else:
+            return False
+    def __ne__(self, other):
+        return not self == other
 
 
 class MonsterAI:
@@ -12,7 +19,7 @@ class MonsterAI:
         self.dungeon_map = dungeon_map
 
 
-    def solve(self, monster, player):
+    def solve(self, monster, player): #BFS. Pulled form my C++ code from PPW homework 1
         #create queue
         q = Queue()
         start = Position(monster.row, monster.col)
@@ -37,77 +44,43 @@ class MonsterAI:
 
         while(not q.empty()):
             p = q.get()
-            print(p.row, p.col)
+            # print(p.row, p.col)
 
             #get valid moves
             neighbors = []
             for i in [UP, DOWN, LEFT, RIGHT]:
                 if self.dungeon_map.get_tile_type(p.row+i[0], p.col+i[1]) == FLOOR: #the spot next to the current spot is a floor
                     neighbors.append(Position(p.row+i[0], p.col+i[1]))
-                    print("Valid neighbor is at: ", p.row+i[0], p.col+i[1])
+                    # print("Valid neighbor is at: ", p.row+i[0], p.col+i[1])
 
             for current_neighbor in neighbors:
                 if not visited[current_neighbor.row][current_neighbor.col]:
                     q.put(current_neighbor)
                     visited[current_neighbor.row][current_neighbor.col] = True
-                    print("checking prev at: ", current_neighbor.row, current_neighbor.col)
+                    # print("checking prev at: ", current_neighbor.row, current_neighbor.col)
                     prev[current_neighbor.row][current_neighbor.col] = p
-
+        #print(prev)
         return prev
 
 
-    def reconstruct_path(monster, player, prev):
-        pass
+    def reconstruct_path(self, monster, player, prev):
+        start = Position(monster.row, monster.col)
+        end = Position(player.row, player.col)
+        path = []
+
+        # follow the path back from end to start
+        current_position = end
+        while(current_position != None):
+            path.append(current_position)
+            current_position = prev[current_position.row][current_position.col]
+        #print(path)
+        #print(start)
+        path.reverse()
+
+        if path[0] == start: #if there was a path
+            return path
+        else:
+            return []
 
     def next_move(monster, player):
         pass
-
-
-# std::vector<std::vector<Position>> Pathfinder::solve(Position start, Position end){
-#   // create q
-#   std::queue<Position> q;
-#   q.push(start);
-#
-#   // initialize visited array with all falses
-#   bool visited[board_->get_rows()][board_->get_cols()];
-#
-#   for(int i = 0; i<board_->get_rows(); i++){
-#     for(int j = 0; j<board_->get_cols(); j++){
-#       visited[i][j] = false;
-#     }
-#   }
-#   visited[start.row][start.col] = true;
-#
-#   // 2d vector of Positions
-#   std::vector<std::vector<Position>> prev;
-#
-#   // initialize to (-1, -1) as a null value
-#   prev.resize(board_->get_rows(), std::vector<Position>(board_->get_cols()));
-#   for(int i = 0; i < board_->get_rows(); i++){
-#     for(int j = 0; j < board_->get_cols(); j++){
-#       prev[i][j] = Position(-1, -1);
-#     }
-#   }
-#
-#   while(!q.empty()){
-#     Position p = q.front();
-#     q.pop();
-#
-#     // temporary player to use GetMoves
-#     Player * player = new Player("default", true);
-#     player->SetPosition(p);
-#     std::vector<Position> neighbors = board_->GetMoves(player);
-#
-#     //
-#     for(unsigned int i = 0; i< neighbors.size(); i++){
-#       Position current_neighbor = neighbors[i];
-#       if(!visited[current_neighbor.row][current_neighbor.col]){
-#         // add the neighbor to queue, set it as visited, and set it's prev position
-#         q.push(current_neighbor);
-#         visited[current_neighbor.row][current_neighbor.col] = true;
-#         prev[current_neighbor.row][current_neighbor.col] = p;
-#       }
-#     }
-#   }
-#   return prev;
-# }
