@@ -1,4 +1,5 @@
 from Maps.DungeonMap import *
+from Actors.Actor import Actor
 
 def test_map_instantiation():
     map = DungeonMap();
@@ -19,12 +20,27 @@ def test_map_instantiation():
             assert(grid[i][j] == FLOOR)
 
 def test_get_tile_type():
-    map = DungeonMap();
+    map = DungeonMap()
 
-    assert(map.get_tile_type(33, 33) == WALL) # works when given the center of the square
-    assert(map.get_tile_type(34, 34) == WALL) #works when given something off center
-    assert(map.get_tile_type(98, 98) == FLOOR) # works when given the center of the square
-    assert(map.get_tile_type(99, 99) == FLOOR) #works when given something off center
+    assert(map.get_tile_type(0, 0) == WALL) # works with walls
+    assert(map.get_tile_type(1, 1) == FLOOR) # works with floor
 
-    assert(map.get_tile_type(1000000, 1000000) == WALL) #no error and returns wall if off screen to upper right
-    assert(map.get_tile_type(-1000000, -1000000) == WALL) #no error and returns wall if off screen to lower left
+    assert(map.get_tile_type(ROW_COUNT + 1, COLUMN_COUNT + 1) == WALL) #no error and returns wall if off screen to upper right
+    assert(map.get_tile_type(-(ROW_COUNT + 1), -(COLUMN_COUNT + 1)) == WALL) #no error and returns wall if off screen to lower left
+
+def test_update_dungeon():
+    map = DungeonMap()
+    player = Actor(1, 1, arcade.color.BLUE)
+
+    map.update_dungeon([player])
+
+    assert(map.grid[1][1] == ACTOR) #works with a single actor
+
+    player2 = Actor(2, 2, arcade.color.BLUE)
+    map.update_dungeon([player, player2])
+    assert(map.grid[1][1] == ACTOR) #works with a multiple actors
+    assert(map.grid[2][2] == ACTOR) #works with a multiple actor
+
+    map.update_dungeon([player])
+    assert(map.grid[1][1] == ACTOR) #works with a multiple actors
+    assert(map.grid[2][2] != ACTOR) #resets tiles after an actor moves off of them

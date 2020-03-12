@@ -12,16 +12,17 @@ from definitions import *
 
 from Maps.DungeonMap import DungeonMap
 from Actors.Player import Player
+from Actors.Monster import *
 
 def player_wall_collision(player, direction, map):
-    return(map.get_tile_type(player.x+direction[0], player.y+direction[1]) == WALL)
+    return(map.get_tile_type(player.row+direction[0], player.col+direction[1]) != FLOOR)
 
 
 
 class MyGame(arcade.Window):
     """
     Main application class.
-
+player
     NOTE: Go ahead and delete the methods you don't need.
     If you do need a method, delete the 'pass' and replace it
     with your own code. Don't leave 'pass' in this program.
@@ -34,12 +35,24 @@ class MyGame(arcade.Window):
 
         # If you have sprite lists, you should create them here,
         # and set them to None
-        self.map = DungeonMap()
+        self.map = None
 
-        self.player = Player()
+        self.player = None
+        self.monsters_list = None
+        self.actors_list = None
 
     def setup(self):
-        self.map.update_dungeon()
+        self.map = DungeonMap()
+        self.player = Player()
+
+        self.monsters_list = []
+        self.monsters_list.append(LampMonster(4, 4, self.map))
+
+        self.actors_list = []
+        self.actors_list.append(self.player)
+        self.actors_list.extend(self.monsters_list)
+
+        self.map.update_dungeon(self.actors_list)
         # Create your sprites and sprite lists here
         pass
 
@@ -55,6 +68,7 @@ class MyGame(arcade.Window):
         # Call draw() on all your sprite lists below
         self.map.draw()
         self.player.draw()
+        self.monsters_list[0].draw()
 
     def on_update(self, delta_time):
         """
@@ -62,6 +76,10 @@ class MyGame(arcade.Window):
         Normally, you'll call update() on the sprite lists that
         need it.
         """
+        self.actors_list = []
+        self.actors_list.append(self.player)
+        self.actors_list.extend(self.monsters_list)
+        self.map.update_dungeon(self.actors_list)
         pass
 
     def on_key_press(self, key, modifiers):
@@ -70,18 +88,19 @@ class MyGame(arcade.Window):
         if key == arcade.key.UP:
             if(not player_wall_collision(self.player, UP, self.map)):
                 self.player.move(UP)
+                self.monsters_list[0].move(self.player)
         elif key == arcade.key.DOWN:
             if(not player_wall_collision(self.player, DOWN, self.map)):
                 self.player.move(DOWN)
+                self.monsters_list[0].move(self.player)
         elif key == arcade.key.LEFT:
             if(not player_wall_collision(self.player, LEFT, self.map)):
                 self.player.move(LEFT)
+                self.monsters_list[0].move(self.player)
         elif key == arcade.key.RIGHT:
             if(not player_wall_collision(self.player, RIGHT, self.map)):
                 self.player.move(RIGHT)
-        print(self.player.x)
-        print(self.player.y)
-        print(self.map.get_tile_type(self.player.x, self.player.y))
+                self.monsters_list[0].move(self.player)
 
 
 def main():
