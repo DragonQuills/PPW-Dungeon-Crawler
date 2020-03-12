@@ -22,7 +22,7 @@ def player_wall_collision(player, direction, map):
 class MyGame(arcade.Window):
     """
     Main application class.
-
+player
     NOTE: Go ahead and delete the methods you don't need.
     If you do need a method, delete the 'pass' and replace it
     with your own code. Don't leave 'pass' in this program.
