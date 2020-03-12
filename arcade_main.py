@@ -14,7 +14,7 @@ from Maps.DungeonMap import DungeonMap
 from Actors.Player import Player
 
 def player_wall_collision(player, direction, map):
-    return(map.get_tile_type(player.x+direction[0], player.y+direction[1]) == WALL)
+    return(map.get_tile_type(player.x+direction[0], player.y+direction[1]) != FLOOR)
 
 
 
@@ -37,9 +37,11 @@ class MyGame(arcade.Window):
         self.map = DungeonMap()
 
         self.player = Player()
+        self.monsters = []
 
     def setup(self):
-        self.map.update_dungeon()
+        self.monsters.append(self.player)
+        self.map.update_dungeon(self.monsters)
         # Create your sprites and sprite lists here
         pass
 
@@ -62,6 +64,7 @@ class MyGame(arcade.Window):
         Normally, you'll call update() on the sprite lists that
         need it.
         """
+        self.map.update_dungeon(self.monsters.append(self.player))
         pass
 
     def on_key_press(self, key, modifiers):

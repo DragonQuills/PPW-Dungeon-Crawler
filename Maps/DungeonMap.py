@@ -16,16 +16,11 @@ class DungeonMap():
             for col in range(1, COLUMN_COUNT-1):
                 self.grid[row][col] = FLOOR
 
-    def update_dungeon(self):
-        # now make the actual grid that will be displayed
-        self.shape_list = arcade.ShapeElementList()
-        for row in range(ROW_COUNT):
-            for col in range(COLUMN_COUNT):
-                x = (MARGIN + WIDTH) * col + MARGIN + WIDTH // 2
-                y = (MARGIN + HEIGHT) * row + MARGIN + HEIGHT // 2
+    def update_dungeon(self, actors):
+        # update the grid to track the positions of the actors
+        for actor in actors:
+            self.grid[actor.row][actor.col] = ACTOR
 
-                current_rect = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, self.grid[row][col])
-                self.shape_list.append(current_rect)
 
     def get_tile_type(self, x, y):
         # Code from https://arcade.academy/examples/array_backed_grid_buffered.html#array-backed-grid-buffered
@@ -40,4 +35,16 @@ class DungeonMap():
 
 
     def draw(self):
+        self.shape_list = arcade.ShapeElementList()
+        for row in range(ROW_COUNT):
+            for col in range(COLUMN_COUNT):
+                x = (MARGIN + WIDTH) * col + MARGIN + WIDTH // 2
+                y = (MARGIN + HEIGHT) * row + MARGIN + HEIGHT // 2
+
+                if self.grid[row][col] != ACTOR:
+                    current_rect = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, self.grid[row][col])
+                else:
+                    current_rect = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, FLOOR)
+
+                self.shape_list.append(current_rect)
         self.shape_list.draw()
