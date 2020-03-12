@@ -35,14 +35,24 @@ player
 
         # If you have sprite lists, you should create them here,
         # and set them to None
-        self.map = DungeonMap()
+        self.map = None
 
-        self.player = Player()
-        self.monsters = [LampMonster(4, 4, self.map)]
+        self.player = None
+        self.monsters_list = None
+        self.actors_list = None
 
     def setup(self):
-        self.monsters.append(self.player)
-        self.map.update_dungeon(self.monsters)
+        self.map = DungeonMap()
+        self.player = Player()
+
+        self.monsters_list = []
+        self.monsters_list.append(LampMonster(4, 4, self.map))
+
+        self.actors_list = []
+        self.actors_list.append(self.player)
+        self.actors_list.extend(self.monsters_list)
+
+        self.map.update_dungeon(self.actors_list)
         # Create your sprites and sprite lists here
         pass
 
@@ -58,7 +68,7 @@ player
         # Call draw() on all your sprite lists below
         self.map.draw()
         self.player.draw()
-        self.lampy.draw()
+        self.monsters_list[0].draw()
 
     def on_update(self, delta_time):
         """
@@ -66,7 +76,10 @@ player
         Normally, you'll call update() on the sprite lists that
         need it.
         """
-        self.map.update_dungeon(self.monsters.append(self.player))
+        self.actors_list = []
+        self.actors_list.append(self.player)
+        self.actors_list.extend(self.monsters_list)
+        self.map.update_dungeon(self.actors_list)
         pass
 
     def on_key_press(self, key, modifiers):
@@ -75,19 +88,19 @@ player
         if key == arcade.key.UP:
             if(not player_wall_collision(self.player, UP, self.map)):
                 self.player.move(UP)
-                self.lampy.move(self.player)
+                self.monsters_list[0].move(self.player)
         elif key == arcade.key.DOWN:
             if(not player_wall_collision(self.player, DOWN, self.map)):
                 self.player.move(DOWN)
-                self.lampy.move(self.player)
+                self.monsters_list[0].move(self.player)
         elif key == arcade.key.LEFT:
             if(not player_wall_collision(self.player, LEFT, self.map)):
                 self.player.move(LEFT)
-                self.lampy.move(self.player)
+                self.monsters_list[0].move(self.player)
         elif key == arcade.key.RIGHT:
             if(not player_wall_collision(self.player, RIGHT, self.map)):
                 self.player.move(RIGHT)
-                self.lampy.move(self.player)
+                self.monsters_list[0].move(self.player)
 
 
 def main():

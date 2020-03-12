@@ -17,6 +17,11 @@ class DungeonMap():
                 self.grid[row][col] = FLOOR
 
     def update_dungeon(self, actors):
+        # remove previous positions of actors
+        for row in range(ROW_COUNT):
+            for col in range(COLUMN_COUNT):
+                if self.grid[row][col] == ACTOR:
+                    self.grid[row][col] = FLOOR
         # update the grid to track the positions of the actors
         for actor in actors:
             self.grid[actor.row][actor.col] = ACTOR
@@ -39,10 +44,10 @@ class DungeonMap():
                 x = (MARGIN + WIDTH) * col + MARGIN + WIDTH // 2
                 y = (MARGIN + HEIGHT) * row + MARGIN + HEIGHT // 2
 
-                if self.grid[row][col] != ACTOR:
-                    current_rect = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, self.grid[row][col])
-                else:
-                    current_rect = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, FLOOR)
+                # if self.grid[row][col] != ACTOR:
+                current_rect = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, self.grid[row][col])
+                # else:
+                    # current_rect = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, FLOOR)
 
                 self.shape_list.append(current_rect)
         self.shape_list.draw()
