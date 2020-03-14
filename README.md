@@ -8,6 +8,9 @@ First, download this project. Then, from the command line in the PPW-Dungeon-Cra
 
     $ python3 arcade_main.py
 
+## How To Play
+After booting up the program (using the command listed above) use the arrow keys to move the player. Grey tiles represent the floor and black represent walls. The player is teal, the monster is orange. The monster will follow the player and quite likely trap them, currently resulting in a restart because there is no attack functionality and the dungeon is a very small room.
+
 ### Dependencies
 Dungeon Delve is build for Python 3.6+. Arcade only supports Python 3.6+ so this will not run in anything below that!
 
