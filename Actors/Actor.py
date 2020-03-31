@@ -25,3 +25,11 @@ class Actor(arcade.Sprite):
 
     def change_facing(self, direction):
         self.facing = direction
+
+    def determine_direction(self, row, col):
+        temp_row = row - self.row
+        temp_col = col - self.col
+        if [temp_row, temp_col] in [UP, DOWN, LEFT, RIGHT]:
+            return [temp_row, temp_col]
+        else:
+            return NULL
