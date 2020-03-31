@@ -8,6 +8,7 @@ class Monster(Actor):
 
     def move(self, player):
         next_move = self.ai.next_move(self, player)
+        self.facing = self.determine_direction(next_move.row, next_move.col)
         self.row = next_move.row
         self.col = next_move.col
 

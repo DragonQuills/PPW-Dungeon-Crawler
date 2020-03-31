@@ -14,7 +14,7 @@ from Maps.DungeonMap import DungeonMap
 from Actors.Player import Player
 from Actors.Monster import *
 
-def player_wall_collision(player, direction, map):
+def player_collision(player, direction, map):
     return(map.get_tile_type(player.row+direction[0], player.col+direction[1]) != FLOOR)
 
 
@@ -86,19 +86,23 @@ player
         """Called whenever a key is pressed. """
 
         if key == arcade.key.UP:
-            if(not player_wall_collision(self.player, UP, self.map)):
+            self.player.change_facing(UP)
+            if(not player_collision(self.player, UP, self.map) and modifiers != arcade.key.MOD_SHIFT):
                 self.player.move(UP)
                 self.monsters_list[0].move(self.player)
         elif key == arcade.key.DOWN:
-            if(not player_wall_collision(self.player, DOWN, self.map)):
+            self.player.change_facing(DOWN)
+            if(not player_collision(self.player, DOWN, self.map) and modifiers != arcade.key.MOD_SHIFT):
                 self.player.move(DOWN)
                 self.monsters_list[0].move(self.player)
         elif key == arcade.key.LEFT:
-            if(not player_wall_collision(self.player, LEFT, self.map)):
+            self.player.change_facing(LEFT)
+            if(not player_collision(self.player, LEFT, self.map) and modifiers != arcade.key.MOD_SHIFT):
                 self.player.move(LEFT)
                 self.monsters_list[0].move(self.player)
         elif key == arcade.key.RIGHT:
-            if(not player_wall_collision(self.player, RIGHT, self.map)):
+            self.player.change_facing(RIGHT)
+            if(not player_collision(self.player, RIGHT, self.map) and modifiers != arcade.key.MOD_SHIFT):
                 self.player.move(RIGHT)
                 self.monsters_list[0].move(self.player)
 
