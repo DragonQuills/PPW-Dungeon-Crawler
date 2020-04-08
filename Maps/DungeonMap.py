@@ -1,8 +1,9 @@
 from definitions import *
 
 class DungeonMap():
+    # Dungeon layout is currently hard-coded, I hope to fix this later
     def __init__(self):
-        #create the array of what the tule types are
+        #create the array of what the tile types are
         self.grid = []
         self.shape_list = None
         for row in range(ROW_COUNT):
@@ -28,26 +29,23 @@ class DungeonMap():
 
 
     def get_tile_type(self, row, col):
-        # Code from https://arcade.academy/examples/array_backed_grid_buffered.html#array-backed-grid-buffered
-        # Change the x/y screen coordinates to grid coordinates
-
+        # if in bounds
         if (row < ROW_COUNT and col < COLUMN_COUNT) and (row >= 0 and col >= 0):
             return self.grid[row][col]
-        else:
+        else: #outside of valid bounds is considered a wall.
             return WALL
 
 
     def draw(self):
+        # creating the shapes first then drawing them in a batch is more efficent
         self.shape_list = arcade.ShapeElementList()
         for row in range(ROW_COUNT):
             for col in range(COLUMN_COUNT):
+                # convert row and column to x and y for drawing
                 x = (MARGIN + WIDTH) * col + MARGIN + WIDTH // 2
                 y = (MARGIN + HEIGHT) * row + MARGIN + HEIGHT // 2
 
-                # if self.grid[row][col] != ACTOR:
                 current_rect = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, self.grid[row][col])
-                # else:
-                    # current_rect = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, FLOOR)
 
                 self.shape_list.append(current_rect)
         self.shape_list.draw()
