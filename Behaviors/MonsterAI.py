@@ -2,6 +2,7 @@ from definitions import *
 from queue import Queue #for BFS
 import random # for shuffling the directional array
 
+# Basically a struct to hold a row and column to make the BFS easier
 class Position:
     def __init__(self, row, col):
         self.row = row
@@ -25,7 +26,7 @@ class MonsterAI:
         self.dungeon_map = dungeon_map
 
 
-    def solve(self, monster, player): #BFS. Pulled form my C++ code from PPW homework 1
+    def solve(self, monster, player): #BFS. Pulled from my C++ code from PPW homework 1
         #create queue
         q = Queue()
         start = Position(monster.row, monster.col)
@@ -70,7 +71,6 @@ class MonsterAI:
 
 
     def reconstruct_path(self, monster, player, prev):
-        # print("in reconstruct path")
         start = Position(monster.row, monster.col)
         end = Position(player.row, player.col)
         path = []
