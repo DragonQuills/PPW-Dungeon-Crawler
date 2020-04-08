@@ -14,6 +14,7 @@ from Maps.DungeonMap import DungeonMap
 from Actors.Player import Player
 from Actors.Monster import *
 
+# detects if the direction the player is trying to move to is valid
 def player_collision(player, direction, map):
     return(map.get_tile_type(player.row+direction[0], player.col+direction[1]) != FLOOR)
 
@@ -22,7 +23,7 @@ def player_collision(player, direction, map):
 class MyGame(arcade.Window):
     """
     Main application class.
-player
+
     NOTE: Go ahead and delete the methods you don't need.
     If you do need a method, delete the 'pass' and replace it
     with your own code. Don't leave 'pass' in this program.
@@ -42,6 +43,7 @@ player
         self.actors_list = None
 
     def setup(self):
+        # initializes all class attributes
         self.map = DungeonMap()
         self.player = Player()
 
@@ -53,7 +55,6 @@ player
         self.actors_list.extend(self.monsters_list)
 
         self.map.update_dungeon(self.actors_list)
-        # Create your sprites and sprite lists here
 
     def on_draw(self):
         """
@@ -75,29 +76,35 @@ player
         Normally, you'll call update() on the sprite lists that
         need it.
         """
-        self.actors_list = []
-        self.actors_list.append(self.player)
-        self.actors_list.extend(self.monsters_list)
+        # self.actors_list = []
+        # self.actors_list.append(self.player)
+        # self.actors_list.extend(self.monsters_list)
         self.map.update_dungeon(self.actors_list)
-        pass
+
+    # moves and/or changes the direction of the player based on the key pressed
+    def player_turn(self, direction, key_modifiers):
+        # we should always change the direction if the player hit an arrow key
+        self.player.change_facing(direction)
+        '''
+        if the player hit shift+arrow, they should change directions but not move
+        and the player's turn shouldn't end
+        '''
+        if(not player_collision(self.player, direction, self.map) and key_modifiers != arcade.key.MOD_SHIFT):
+            self.player.move(direction)
+            self.monsters_list[0].move(self.player)
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
 
         if key == arcade.key.UP:
-            player_turn(UP)
+            self.player_turn(UP, modifiers)
         elif key == arcade.key.DOWN:
-            player_turn(DOWN)
+            self.player_turn(DOWN, modifiers)
         elif key == arcade.key.LEFT:
-            player_turn(LEFT)
+            self.player_turn(LEFT, modifiers)
         elif key == arcade.key.RIGHT:
-            player_turn(RIGHT)
+            self.player_turn(RIGHT, modifiers)
 
-    def player_turn(direction, key_modifiers):
-        self.player.change_facing(direction)
-        if(not player_collision(self.player, direction, self.map) and key_modifiers != arcade.key.MOD_SHIFT):
-            self.player.move(direction)
-            self.monsters_list[0].move(self.player)
 
 
 def main():
