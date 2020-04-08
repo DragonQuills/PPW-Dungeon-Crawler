@@ -4,8 +4,10 @@ from Behaviors.MonsterAI import MonsterAI
 class Monster(Actor):
     def __init__(self, row, col, color, dungeon_map):
         super().__init__(row, col, color)
+        # the AI needs to know the layout of the dungeon to navigate
         self.ai = MonsterAI(dungeon_map)
 
+    # overwritten to use the AI to determine the move to make
     def move(self, player):
         next_move = self.ai.next_move(self, player)
         self.facing = self.determine_direction(next_move.row, next_move.col)

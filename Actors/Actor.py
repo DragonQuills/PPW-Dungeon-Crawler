@@ -7,15 +7,19 @@ class Actor(arcade.Sprite):
         self._color = color
         self.facing = DOWN
 
+    # this converts the actor's current row and column to an x and y that arcade uses to draw the actor
     def get_x_y(self):
         x = (MARGIN + WIDTH) * self.col + MARGIN + WIDTH // 2
         y = (MARGIN + HEIGHT) * self.row + MARGIN + HEIGHT // 2
         return [x, y]
 
+    #
     def draw(self):
         x, y = self.get_x_y()
+        # draw the main body of the actor
         icon = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, self.color)
         icon.draw()
+        #draw a mini square to show which direction the actor is facing
         face = arcade.create_rectangle_filled(x+self.facing[1]*27, y+self.facing[0]*27, 10, 10, arcade.color.AFRICAN_VIOLET)
         face.draw()
 
@@ -26,6 +30,8 @@ class Actor(arcade.Sprite):
     def change_facing(self, direction):
         self.facing = direction
 
+    # given a row and column, determines if that sapce is next to the actor,
+    # and if so returns the direction the square is.
     def determine_direction(self, row, col):
         temp_row = row - self.row
         temp_col = col - self.col
