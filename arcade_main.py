@@ -42,6 +42,8 @@ class MyGame(arcade.Window):
         self.monsters_list = None
         self.actors_list = None
 
+        self.is_players_turn = None
+
     def setup(self):
         # initializes all class attributes
         self.map = DungeonMap()
@@ -55,6 +57,8 @@ class MyGame(arcade.Window):
         self.actors_list.extend(self.monsters_list)
 
         self.map.update_dungeon(self.actors_list)
+
+        self.is_players_turn = True
 
     def on_draw(self):
         """
@@ -76,10 +80,26 @@ class MyGame(arcade.Window):
         Normally, you'll call update() on the sprite lists that
         need it.
         """
-        # self.actors_list = []
-        # self.actors_list.append(self.player)
-        # self.actors_list.extend(self.monsters_list)
+        if not self.is_players_turn:
+            print("Player is at ", self.player.row, self.player.col)
+            self.monsters_list[0].move(self.player)
+            self.is_players_turn = True
+
         self.map.update_dungeon(self.actors_list)
+
+
+
+    def on_key_press(self, key, modifiers):
+        """Called whenever a key is pressed. """
+        if self.is_players_turn:
+            if key == arcade.key.UP:
+                self.player_turn(UP, modifiers)
+            elif key == arcade.key.DOWN:
+                self.player_turn(DOWN, modifiers)
+            elif key == arcade.key.LEFT:
+                self.player_turn(LEFT, modifiers)
+            elif key == arcade.key.RIGHT:
+                self.player_turn(RIGHT, modifiers)
 
     # moves and/or changes the direction of the player based on the key pressed
     def player_turn(self, direction, key_modifiers):
@@ -91,20 +111,7 @@ class MyGame(arcade.Window):
         '''
         if(not player_collision(self.player, direction, self.map) and key_modifiers != arcade.key.MOD_SHIFT):
             self.player.move(direction)
-            self.monsters_list[0].move(self.player)
-
-    def on_key_press(self, key, modifiers):
-        """Called whenever a key is pressed. """
-
-        if key == arcade.key.UP:
-            self.player_turn(UP, modifiers)
-        elif key == arcade.key.DOWN:
-            self.player_turn(DOWN, modifiers)
-        elif key == arcade.key.LEFT:
-            self.player_turn(LEFT, modifiers)
-        elif key == arcade.key.RIGHT:
-            self.player_turn(RIGHT, modifiers)
-
+            self.is_players_turn = False
 
 
 def main():
