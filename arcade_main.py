@@ -9,6 +9,7 @@ python -m arcade.examples.starting_template
 """
 
 import time
+import copy
 
 from definitions import *
 
@@ -68,7 +69,7 @@ class MyGame(arcade.Window):
         self.actors_list.append(self.player)
         self.actors_list.extend(self.monsters_list)
 
-        self.map.update_dungeon(self.actors_list)
+        self.map.update_dungeon([], self.actors_list)
 
         self.is_players_turn = True
 
@@ -96,13 +97,18 @@ class MyGame(arcade.Window):
         Normally, you'll call update() on the sprite lists that
         need it.
         """
+        old_actors = copy.deepcopy(self.actors_list)
         # self.map.update_dungeon(self.actors_list)
 
         if self.is_players_turn and self.key_pressed != None:
             self.player_turn(self.key_pressed, self.key_modifiers)
             self.key_pressed = None
+            # print("old",old_actors[0].row, old_actors[0].col)
+            # print("new",self.actors_list[0].row, self.actors_list[0].col)
 
-        self.map.update_dungeon(self.actors_list)
+        self.map.update_dungeon(old_actors, self.actors_list)
+        old_actors = self.actors_list
+
 
         if not self.is_players_turn:
             self.monster_move_timer += 1
@@ -119,6 +125,7 @@ class MyGame(arcade.Window):
             else:
                 return;
 
+        self.map.update_dungeon(old_actors, self.actors_list)
 
 
 

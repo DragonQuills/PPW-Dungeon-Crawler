@@ -17,14 +17,14 @@ class DungeonMap():
             for col in range(1, COLUMN_COUNT-1):
                 self.grid[row][col] = FLOOR
 
-    def update_dungeon(self, actors):
+    def update_dungeon(self, old_actors, new_actors):
         # remove previous positions of actors
-        for row in range(ROW_COUNT):
-            for col in range(COLUMN_COUNT):
-                if self.grid[row][col] == ACTOR:
-                    self.grid[row][col] = FLOOR
+        if old_actors != []: #if we aren't just initializing the list for the first time
+            for actor in old_actors:
+                # print("making spot into a floor", actor.row, actor.col)
+                self.grid[actor.row][actor.col] = FLOOR
         # update the grid to track the positions of the actors
-        for actor in actors:
+        for actor in new_actors:
             self.grid[actor.row][actor.col] = ACTOR
 
 
