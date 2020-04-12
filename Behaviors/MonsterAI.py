@@ -1,6 +1,7 @@
 from definitions import *
 from queue import Queue #for BFS
 import random # for shuffling the directional array
+import copy
 
 # Basically a struct to hold a row and column to make the BFS easier
 class Position:
@@ -23,7 +24,7 @@ class Position:
 
 class MonsterAI:
     def __init__(self, dungeon_map):
-        self.dungeon_map = dungeon_map
+        self.dungeon_map = copy.deepcopy(dungeon_map)
 
 
     def solve(self, monster, player): #BFS. Pulled from my C++ code from PPW homework 1

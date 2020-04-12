@@ -98,7 +98,6 @@ class MyGame(arcade.Window):
         need it.
         """
         old_actors = copy.deepcopy(self.actors_list)
-        # self.map.update_dungeon(self.actors_list)
 
         if self.is_players_turn and self.key_pressed != None:
             self.player_turn(self.key_pressed, self.key_modifiers)
@@ -107,16 +106,15 @@ class MyGame(arcade.Window):
             # print("new",self.actors_list[0].row, self.actors_list[0].col)
 
         self.map.update_dungeon(old_actors, self.actors_list)
-        old_actors = self.actors_list
-
+        old_actors = copy.deepcopy(self.actors_list)
 
         if not self.is_players_turn:
             self.monster_move_timer += 1
 
-            if self.monster_move_timer > 20:
-                # self.map.update_dungeon(self.actors_list)
+            if self.monster_move_timer > 7:
                 if self.monster_turn < len(self.monsters_list):
-                    self.monsters_list[self.monster_turn].move(self.player)
+                    self.monsters_list[self.monster_turn].move(self.player, self.map)
+                    self.map.update_dungeon(old_actors, self.actors_list)
                     self.monster_turn += 1
                     self.monster_move_timer = 0
                 else:
