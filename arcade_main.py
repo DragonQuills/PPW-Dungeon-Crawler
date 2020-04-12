@@ -8,6 +8,8 @@ If Python and Arcade are installed, this example can be run from the command lin
 python -m arcade.examples.starting_template
 """
 
+import time
+
 from definitions import *
 
 from Maps.DungeonMap import DungeonMap
@@ -43,6 +45,12 @@ class MyGame(arcade.Window):
         self.actors_list = None
 
         self.is_players_turn = None
+        # self.frame_count = None
+
+        # self.key_pressed = None
+        # self.key_modifiers = None
+        self.monster_move_timer = None
+
 
     def setup(self):
         # initializes all class attributes
@@ -51,6 +59,7 @@ class MyGame(arcade.Window):
 
         self.monsters_list = []
         self.monsters_list.append(LampMonster(4, 4, self.map))
+        # self.monsters_list.append(SkullMonster(5, 6, self.map))
 
         self.actors_list = []
         self.actors_list.append(self.player)
@@ -59,6 +68,9 @@ class MyGame(arcade.Window):
         self.map.update_dungeon(self.actors_list)
 
         self.is_players_turn = True
+        # Used to make the monsters move after a slight delay and 1 by 1 instead
+        # of them all swarming the player at once
+        self.monster_move_timer = 0
 
     def on_draw(self):
         """
@@ -80,10 +92,14 @@ class MyGame(arcade.Window):
         Normally, you'll call update() on the sprite lists that
         need it.
         """
+
         if not self.is_players_turn:
-            print("Player is at ", self.player.row, self.player.col)
-            self.monsters_list[0].move(self.player)
-            self.is_players_turn = True
+            self.monster_move_timer += 1
+            if self.monster_move_timer > 20: #
+                self.monsters_list[0].move(self.player)
+                self.is_players_turn = True
+            else:
+                return;
 
         self.map.update_dungeon(self.actors_list)
 
@@ -112,6 +128,7 @@ class MyGame(arcade.Window):
         if(not player_collision(self.player, direction, self.map) and key_modifiers != arcade.key.MOD_SHIFT):
             self.player.move(direction)
             self.is_players_turn = False
+            self.monster_move_timer = 0
 
 
 def main():
