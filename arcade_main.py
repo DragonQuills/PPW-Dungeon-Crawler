@@ -45,11 +45,14 @@ class MyGame(arcade.Window):
         self.actors_list = None
 
         self.is_players_turn = None
-        # self.frame_count = None
 
         # self.key_pressed = None
         # self.key_modifiers = None
+
+        # Used to make the monsters move after a slight delay and 1 by 1 instead
+        # of them all swarming the player at once
         self.monster_move_timer = None
+        self.monster_turn = None
 
 
     def setup(self):
@@ -59,7 +62,7 @@ class MyGame(arcade.Window):
 
         self.monsters_list = []
         self.monsters_list.append(LampMonster(4, 4, self.map))
-        # self.monsters_list.append(SkullMonster(5, 6, self.map))
+        self.monsters_list.append(SkullMonster(5, 6, self.map))
 
         self.actors_list = []
         self.actors_list.append(self.player)
@@ -68,9 +71,9 @@ class MyGame(arcade.Window):
         self.map.update_dungeon(self.actors_list)
 
         self.is_players_turn = True
-        # Used to make the monsters move after a slight delay and 1 by 1 instead
-        # of them all swarming the player at once
+
         self.monster_move_timer = 0
+        self.monster_turn = 0
 
     def on_draw(self):
         """
@@ -84,7 +87,8 @@ class MyGame(arcade.Window):
         # Call draw() on all your sprite lists below
         self.map.draw()
         self.player.draw()
-        self.monsters_list[0].draw()
+        for monster in self.monsters_list:
+            monster.draw()
 
     def on_update(self, delta_time):
         """
@@ -95,9 +99,14 @@ class MyGame(arcade.Window):
 
         if not self.is_players_turn:
             self.monster_move_timer += 1
-            if self.monster_move_timer > 20: #
-                self.monsters_list[0].move(self.player)
-                self.is_players_turn = True
+
+            if self.monster_move_timer > 20:
+                if self.monster_turn < len(self.monsters_list):
+                    self.monsters_list[self.monster_turn].move(self.player)
+                    self.monster_turn += 1
+                else:
+                    self.is_players_turn = True
+                    self.monster_turn = 0
             else:
                 return;
 
