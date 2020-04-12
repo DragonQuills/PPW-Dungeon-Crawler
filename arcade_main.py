@@ -17,7 +17,9 @@ from Maps.DungeonMap import DungeonMap
 from Actors.Player import Player
 from Actors.Monster import *
 
-# detects if the direction the player is trying to move to is valid
+"""
+Detects if the direction the player is trying to move to is valid
+"""
 def player_collision(player, direction, map):
     return(map.get_tile_type(player.row+direction[0], player.col+direction[1]) != FLOOR)
 
@@ -33,6 +35,10 @@ class MyGame(arcade.Window):
     """
 
     def __init__(self, width, height, title):
+        """
+        Initializes things like the window size and background color
+        and declares all class variables
+        """
         super().__init__(width, height, title)
 
         arcade.set_background_color(arcade.color.AMAZON)
@@ -43,10 +49,12 @@ class MyGame(arcade.Window):
 
         self.player = None
         self.monsters_list = None
+        # Used to track the positions of all actors for collision detection.
         self.actors_list = None
 
         self.is_players_turn = None
 
+        # Used to make the player momve during the update step, which is best practice
         self.key_pressed = None
         self.key_modifiers = None
 
@@ -57,7 +65,9 @@ class MyGame(arcade.Window):
 
 
     def setup(self):
-        # initializes all class attributes
+        """
+        Initializes all class attributes
+        """
         self.map = DungeonMap()
         self.player = Player()
 
@@ -102,8 +112,6 @@ class MyGame(arcade.Window):
         if self.is_players_turn and self.key_pressed != None:
             self.player_turn(self.key_pressed, self.key_modifiers)
             self.key_pressed = None
-            # print("old",old_actors[0].row, old_actors[0].col)
-            # print("new",self.actors_list[0].row, self.actors_list[0].col)
 
         self.map.update_dungeon(old_actors, self.actors_list)
         old_actors = copy.deepcopy(self.actors_list)
@@ -146,10 +154,9 @@ class MyGame(arcade.Window):
     def player_turn(self, direction, key_modifiers):
         # we should always change the direction if the player hit an arrow key
         self.player.change_facing(direction)
-        '''
-        if the player hit shift+arrow, they should change directions but not move
-        and the player's turn shouldn't end
-        '''
+
+        # if the player hit shift+arrow, they should change directions but not move
+        # and the player's turn shouldn't end
         if(not player_collision(self.player, direction, self.map) and key_modifiers != arcade.key.MOD_SHIFT):
             self.player.move(direction)
             self.is_players_turn = False

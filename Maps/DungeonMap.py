@@ -21,7 +21,6 @@ class DungeonMap():
         # remove previous positions of actors
         if old_actors != []: #if we aren't just initializing the list for the first time
             for actor in old_actors:
-                # print("making spot into a floor", actor.row, actor.col)
                 self.grid[actor.row][actor.col] = FLOOR
         # update the grid to track the positions of the actors
         for actor in new_actors:
