@@ -1,6 +1,5 @@
 import arcade
-
-
+from queue import Queue
 
 class Window(arcade.Window):
     def __init__(self):
@@ -9,12 +8,16 @@ class Window(arcade.Window):
     def setup(self):
         arcade.set_background_color(arcade.color.AMETHYST)
         self.text_box = arcade.Sprite(":resources:gui_themes/Fantasy/TextBox/Brown.png", scale = 1.7, center_x = 400, center_y = 300)
-        # self.text_box.height = 96
-        # self.text_box.width = 800
+
+        self.messages = []
+        self.messages.append("You did 5 damage to the monster")
+
     def on_draw(self):
         arcade.start_render()
         super().on_draw()
         self.text_box.draw()
+        for item in self.messages:
+            arcade.draw_text(item, self.text_box.left, self.text_box.top, arcade.color.BLACK)
 
 
 def main():
