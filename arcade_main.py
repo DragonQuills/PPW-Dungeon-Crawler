@@ -111,7 +111,7 @@ class MyGame(arcade.Window):
         if not self.is_players_turn:
             self.monster_move_timer += 1
 
-            if self.monster_move_timer > 7:
+            if self.monster_move_timer > 5:
                 if self.monster_turn < len(self.monsters_list):
                     self.monsters_list[self.monster_turn].move(self.player, self.map)
                     self.map.update_dungeon(old_actors, self.actors_list)
@@ -123,23 +123,19 @@ class MyGame(arcade.Window):
             else:
                 return;
 
-        self.map.update_dungeon(old_actors, self.actors_list)
-
-
-
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
         if self.is_players_turn:
-            if key == arcade.key.UP:
+            if key == arcade.key.UP or key == arcade.key.W:
                 self.key_pressed = UP
                 self.key_modifiers = modifiers
-            elif key == arcade.key.DOWN:
+            elif key == arcade.key.DOWN or key == arcade.key.S:
                 self.key_pressed = DOWN
                 self.key_modifiers = modifiers
-            elif key == arcade.key.LEFT:
+            elif key == arcade.key.LEFT or key == arcade.key.A:
                 self.key_pressed = LEFT
                 self.key_modifiers = modifiers
-            elif key == arcade.key.RIGHT:
+            elif key == arcade.key.RIGHT or key == arcade.key.D:
                 self.key_pressed = RIGHT
                 self.key_modifiers = modifiers
             else:
