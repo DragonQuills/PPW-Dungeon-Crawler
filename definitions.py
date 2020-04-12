@@ -9,12 +9,15 @@ places.
 import arcade
 
 # Set how many rows and columns we will have
-ROW_COUNT = 10
-COLUMN_COUNT = 10
+ROW_COUNT = 15
+COLUMN_COUNT = 15
 
 # This sets the WIDTH and HEIGHT of each grid location
-WIDTH = 64
-HEIGHT = 64
+WIDTH = 48
+HEIGHT = 48
+
+# The heihgt of the text box at the bottom of the screen
+TEXT_BOX_HEIGHT = 128
 
 # This sets the margin between each cell
 # and on the edges of the screen.
@@ -22,7 +25,7 @@ MARGIN = 1
 
 # Do the math to figure out our screen dimensions
 SCREEN_WIDTH = (WIDTH + MARGIN) * COLUMN_COUNT + MARGIN
-SCREEN_HEIGHT = (HEIGHT + MARGIN) * ROW_COUNT + MARGIN
+SCREEN_HEIGHT = (HEIGHT + MARGIN) * ROW_COUNT + MARGIN + TEXT_BOX_HEIGHT
 SCREEN_TITLE = "Dungeon Delve"
 
 #Colors for the dungeon tiles

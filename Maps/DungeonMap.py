@@ -26,6 +26,19 @@ class DungeonMap():
         for actor in new_actors:
             self.grid[actor.row][actor.col] = ACTOR
 
+        # creating the shapes in here then drawing them in a batch is more efficent
+        # than recreting them every time we draw
+        self.shape_list = arcade.ShapeElementList()
+        for row in range(ROW_COUNT):
+            for col in range(COLUMN_COUNT):
+                # convert row and column to x and y for drawing
+                x = (MARGIN + WIDTH) * col + MARGIN + WIDTH // 2
+                y = (MARGIN + HEIGHT) * row + MARGIN + HEIGHT // 2 + TEXT_BOX_HEIGHT
+
+                current_rect = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, self.grid[row][col])
+
+                self.shape_list.append(current_rect)
+
 
     def get_tile_type(self, row, col):
         # if in bounds
@@ -36,15 +49,4 @@ class DungeonMap():
 
 
     def draw(self):
-        # creating the shapes first then drawing them in a batch is more efficent
-        self.shape_list = arcade.ShapeElementList()
-        for row in range(ROW_COUNT):
-            for col in range(COLUMN_COUNT):
-                # convert row and column to x and y for drawing
-                x = (MARGIN + WIDTH) * col + MARGIN + WIDTH // 2
-                y = (MARGIN + HEIGHT) * row + MARGIN + HEIGHT // 2
-
-                current_rect = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, self.grid[row][col])
-
-                self.shape_list.append(current_rect)
         self.shape_list.draw()

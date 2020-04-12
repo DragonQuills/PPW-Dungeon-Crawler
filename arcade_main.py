@@ -112,8 +112,8 @@ class MyGame(arcade.Window):
         if self.is_players_turn and self.key_pressed != None:
             self.player_turn(self.key_pressed, self.key_modifiers)
             self.key_pressed = None
+            self.map.update_dungeon(old_actors, self.actors_list)
 
-        self.map.update_dungeon(old_actors, self.actors_list)
         old_actors = copy.deepcopy(self.actors_list)
 
         if not self.is_players_turn:
