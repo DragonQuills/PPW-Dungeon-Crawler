@@ -32,15 +32,15 @@ def test_update_dungeon():
     map = DungeonMap()
     player = Actor(1, 1, arcade.color.BLUE)
 
-    map.update_dungeon([player])
+    map.update_dungeon([], [player])
 
     assert(map.grid[1][1] == ACTOR) #works with a single actor
-
+    old_actors = [player]
     player2 = Actor(2, 2, arcade.color.BLUE)
-    map.update_dungeon([player, player2])
+    map.update_dungeon([player],[player, player2])
     assert(map.grid[1][1] == ACTOR) #works with a multiple actors
     assert(map.grid[2][2] == ACTOR) #works with a multiple actor
 
-    map.update_dungeon([player])
+    map.update_dungeon([player, player2], [player])
     assert(map.grid[1][1] == ACTOR) #works with a multiple actors
     assert(map.grid[2][2] != ACTOR) #resets tiles after an actor moves off of them
