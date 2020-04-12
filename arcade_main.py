@@ -113,6 +113,7 @@ class MyGame(arcade.Window):
             self.player_turn(self.key_pressed, self.key_modifiers)
             self.key_pressed = None
             self.map.update_dungeon(old_actors, self.actors_list)
+            self.map.recreate_shapes()
 
         old_actors = copy.deepcopy(self.actors_list)
 
@@ -123,6 +124,7 @@ class MyGame(arcade.Window):
                 if self.monster_turn < len(self.monsters_list):
                     self.monsters_list[self.monster_turn].move(self.player, self.map)
                     self.map.update_dungeon(old_actors, self.actors_list)
+                    self.map.recreate_shapes()
                     self.monster_turn += 1
                     self.monster_move_timer = 0
                 else:
