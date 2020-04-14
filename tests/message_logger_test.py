@@ -13,6 +13,6 @@ def test_push_message():
     m = MessageLogger.instance()
     m.push_message("test1")
     m.push_message("test2")
-    assert(m.messages == ["test1, test2"])
+    assert(m.messages == ["test1", "test2"])
     m.push_message("test3")
-    assert(m.messages == ["test2, test3"])
+    assert(m.messages == ["test2", "test3"])
