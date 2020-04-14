@@ -113,7 +113,7 @@ class MyGame(arcade.Window):
             monster.draw()
 
         self.text_box.draw()
-        self.message_logger.draw(self.text_box.width/10, self.text_box.height - self.text_box.height/4, 15)
+        self.message_logger.draw(self.text_box.width/10, self.text_box.height - self.text_box.height/4, TEXT_SIZE)
 
     def on_update(self, delta_time):
         """

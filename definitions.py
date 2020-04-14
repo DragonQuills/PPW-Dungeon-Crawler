@@ -35,6 +35,11 @@ ACTOR = arcade.color.PINK
 
 BACKGROUND_COLOR = arcade.color.DARK_BROWN
 
+# UI definitions
+TEXT_SIZE = 17
+MAX_MESSAGES_ON_SCREEN = 6
+
+#Movement definitions
 UP = [1, 0]
 DOWN = [-1, 0]
 LEFT = [0, -1]
