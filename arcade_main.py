@@ -54,7 +54,7 @@ class MyGame(arcade.Window):
 
         self.is_players_turn = None
 
-        # Used to make the player momve during the update step, which is best practice
+        # Used to make the player move during the update step, which is best practice
         self.key_pressed = None
         self.key_modifiers = None
 
@@ -62,6 +62,9 @@ class MyGame(arcade.Window):
         # of them all swarming the player at once
         self.monster_move_timer = None
         self.monster_turn = None
+
+        #UI stuff
+        self.text_box = None
 
 
     def setup(self):
@@ -87,6 +90,10 @@ class MyGame(arcade.Window):
         self.monster_move_timer = 0
         self.monster_turn = 0
 
+        self.text_box = arcade.Sprite(":resources:gui_themes/Fantasy/TextBox/Brown.png", scale = 2, center_x = SCREEN_WIDTH/2, center_y = TEXT_BOX_HEIGHT/2)
+        self.text_box.width = SCREEN_WIDTH + MARGIN
+        self.text_box.height = TEXT_BOX_HEIGHT + MARGIN
+
     def on_draw(self):
         """
         Render the screen.
@@ -101,6 +108,8 @@ class MyGame(arcade.Window):
         self.player.draw()
         for monster in self.monsters_list:
             monster.draw()
+
+        self.text_box.draw()
 
     def on_update(self, delta_time):
         """

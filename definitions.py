@@ -33,7 +33,7 @@ FLOOR = arcade.color.ASH_GREY
 WALL = arcade.color.BLACK
 ACTOR = arcade.color.PINK
 
-BACKGROUND_COLOR = arcade.color.AMAZON
+BACKGROUND_COLOR = arcade.color.DARK_BROWN
 
 UP = [1, 0]
 DOWN = [-1, 0]
