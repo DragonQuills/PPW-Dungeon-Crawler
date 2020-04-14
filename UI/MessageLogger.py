@@ -19,8 +19,9 @@ class MessageLogger():
             print('Creating new instance')
             cls._instance = cls.__new__(cls)
             # Put any initialization here.
-            cls.messages = ["Demo message"]
+            cls.messages = ["Demo message", "Second demo"]
         return cls._instance
 
-    def draw(self, starting_x, starting_y):
-        arcade.draw_text(self.messages[0], starting_x, starting_y, arcade.color.BLACK, 15)
+    def draw(self, starting_x, starting_y, message_margin):
+        for i in range(0, len(self.messages)):
+            arcade.draw_text(self.messages[i], starting_x, starting_y - (i * message_margin), arcade.color.COPPER, message_margin)
