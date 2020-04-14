@@ -5,6 +5,7 @@ messages to the text box
 Code to make this a singleton is from here:
 https://python-patterns.guide/gang-of-four/singleton/
 '''
+from definitions import *
 
 class MessageLogger():
     _instance = None
@@ -18,11 +19,8 @@ class MessageLogger():
             print('Creating new instance')
             cls._instance = cls.__new__(cls)
             # Put any initialization here.
-            cls.messages = []
+            cls.messages = ["Demo message"]
         return cls._instance
 
-    def add_message(self, message):
-        self.messages.append(message)
-
-    def print_message(self):
-        print(self.messages)
+    def draw(self, starting_x, starting_y):
+        arcade.draw_text(self.messages[0], starting_x, starting_y, arcade.color.BLACK, 15)

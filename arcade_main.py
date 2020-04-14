@@ -16,6 +16,7 @@ from definitions import *
 from Maps.DungeonMap import DungeonMap
 from Actors.Player import Player
 from Actors.Monster import *
+from UI.MessageLogger import MessageLogger
 
 """
 Detects if the direction the player is trying to move to is valid
@@ -65,6 +66,7 @@ class MyGame(arcade.Window):
 
         #UI stuff
         self.text_box = None
+        self.message_logger = None
 
 
     def setup(self):
@@ -90,9 +92,10 @@ class MyGame(arcade.Window):
         self.monster_move_timer = 0
         self.monster_turn = 0
 
-        self.text_box = arcade.Sprite(":resources:gui_themes/Fantasy/TextBox/Brown.png", scale = 2, center_x = SCREEN_WIDTH/2, center_y = TEXT_BOX_HEIGHT/2)
+        self.text_box = arcade.Sprite(":resources:gui_themes/Fantasy/TextBox/Brown.png", scale = 1, center_x = SCREEN_WIDTH/2, center_y = TEXT_BOX_HEIGHT/2)
         self.text_box.width = SCREEN_WIDTH + MARGIN
         self.text_box.height = TEXT_BOX_HEIGHT + MARGIN
+        self.message_logger = MessageLogger.instance()
 
     def on_draw(self):
         """
@@ -110,6 +113,8 @@ class MyGame(arcade.Window):
             monster.draw()
 
         self.text_box.draw()
+        self.message_logger.draw(self.text_box.width/10, self.text_box.height - self.text_box.height/4)
+        # arcade.draw_circle_filled(self.text_box.left - 60, self.text_box.top- 30, 10, arcade.color.YELLOW)
 
     def on_update(self, delta_time):
         """
