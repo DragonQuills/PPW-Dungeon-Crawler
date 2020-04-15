@@ -16,6 +16,7 @@ from definitions import *
 from Maps.DungeonMap import DungeonMap
 from Actors.Player import Player
 from Actors.Monster import *
+from UI.MessageLogger import MessageLogger
 
 """
 Detects if the direction the player is trying to move to is valid
@@ -41,7 +42,7 @@ class MyGame(arcade.Window):
         """
         super().__init__(width, height, title)
 
-        arcade.set_background_color(arcade.color.AMAZON)
+        arcade.set_background_color(BACKGROUND_COLOR)
 
         # If you have sprite lists, you should create them here,
         # and set them to None
@@ -54,7 +55,7 @@ class MyGame(arcade.Window):
 
         self.is_players_turn = None
 
-        # Used to make the player momve during the update step, which is best practice
+        # Used to make the player move during the update step, which is best practice
         self.key_pressed = None
         self.key_modifiers = None
 
@@ -62,6 +63,10 @@ class MyGame(arcade.Window):
         # of them all swarming the player at once
         self.monster_move_timer = None
         self.monster_turn = None
+
+        #UI stuff
+        self.text_box = None
+        self.message_logger = None
 
 
     def setup(self):
@@ -80,11 +85,17 @@ class MyGame(arcade.Window):
         self.actors_list.extend(self.monsters_list)
 
         self.map.update_dungeon([], self.actors_list)
+        self.map.recreate_shapes()
 
         self.is_players_turn = True
 
         self.monster_move_timer = 0
         self.monster_turn = 0
+
+        self.text_box = arcade.Sprite(":resources:gui_themes/Fantasy/TextBox/Brown.png", scale = 1, center_x = SCREEN_WIDTH/2, center_y = TEXT_BOX_HEIGHT/2)
+        self.text_box.width = SCREEN_WIDTH + MARGIN
+        self.text_box.height = TEXT_BOX_HEIGHT + MARGIN
+        self.message_logger = MessageLogger.instance()
 
     def on_draw(self):
         """
@@ -101,6 +112,9 @@ class MyGame(arcade.Window):
         for monster in self.monsters_list:
             monster.draw()
 
+        self.text_box.draw()
+        self.message_logger.draw(self.text_box.width/10, self.text_box.height - self.text_box.height/4, TEXT_SIZE)
+
     def on_update(self, delta_time):
         """
         All the logic to move, and the game logic goes here.
@@ -112,8 +126,9 @@ class MyGame(arcade.Window):
         if self.is_players_turn and self.key_pressed != None:
             self.player_turn(self.key_pressed, self.key_modifiers)
             self.key_pressed = None
+            self.map.update_dungeon(old_actors, self.actors_list)
+            self.map.recreate_shapes()
 
-        self.map.update_dungeon(old_actors, self.actors_list)
         old_actors = copy.deepcopy(self.actors_list)
 
         if not self.is_players_turn:
@@ -123,6 +138,7 @@ class MyGame(arcade.Window):
                 if self.monster_turn < len(self.monsters_list):
                     self.monsters_list[self.monster_turn].move(self.player, self.map)
                     self.map.update_dungeon(old_actors, self.actors_list)
+                    self.map.recreate_shapes()
                     self.monster_turn += 1
                     self.monster_move_timer = 0
                 else:
