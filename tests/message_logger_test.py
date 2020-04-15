@@ -9,11 +9,7 @@ def test_messagelogger_is_singleton():
     m3 = MessageLogger.instance()
     assert(m2 is m3)
 
-@pytest.fixture(scope = 'module')
-def global_data():
-    return {'MAX_MESSAGES_ON_SCREEN': 2}
-
-
+# Assuming the limit is above 2 which it should always be
 def test_push_message_under_limit():
     m = MessageLogger.instance()
     m.push_message("test1")
