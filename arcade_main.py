@@ -74,6 +74,7 @@ class MyGame(arcade.Window):
         Initializes all class attributes
         """
         self.map = DungeonMap()
+
         self.player = Player()
 
         self.monsters_list = []
@@ -92,6 +93,7 @@ class MyGame(arcade.Window):
         self.monster_move_timer = 0
         self.monster_turn = 0
 
+        # The textbox uses a graphic that's included with Arcade
         self.text_box = arcade.Sprite(":resources:gui_themes/Fantasy/TextBox/Brown.png", scale = 1, center_x = SCREEN_WIDTH/2, center_y = TEXT_BOX_HEIGHT/2)
         self.text_box.width = SCREEN_WIDTH + MARGIN
         self.text_box.height = TEXT_BOX_HEIGHT + MARGIN
@@ -113,6 +115,8 @@ class MyGame(arcade.Window):
             monster.draw()
 
         self.text_box.draw()
+        # All the variables plus global variables should make it easier
+        # to adjust this if I make the screen larger or smaller
         self.message_logger.draw(self.text_box.width/10, self.text_box.height - self.text_box.height/4, TEXT_SIZE)
 
     def on_update(self, delta_time):
@@ -121,20 +125,31 @@ class MyGame(arcade.Window):
         Normally, you'll call update() on the sprite lists that
         need it.
         """
+        #this is needed by the map to replace the actor tiles with floor tiles
         old_actors = copy.deepcopy(self.actors_list)
 
+        # if it is the player's turn and they pressed a valid key
         if self.is_players_turn and self.key_pressed != None:
+            #do the player's action
             self.player_turn(self.key_pressed, self.key_modifiers)
             self.key_pressed = None
+
+            # updating the dungeon so collisions can be detected when the monsters move
             self.map.update_dungeon(old_actors, self.actors_list)
             self.map.recreate_shapes()
+
+            #this is just to show that the messager is working
+            message = "You moved to square (" + str(self.player.row) + ", " + str(self.player.col) + ")"
+            self.message_logger.push_message(message)
 
         old_actors = copy.deepcopy(self.actors_list)
 
         if not self.is_players_turn:
+            # The move timer slows the monsters down so they don't all move at once
             self.monster_move_timer += 1
 
             if self.monster_move_timer > 5:
+                # if there are still monsters who haven't taken their turn
                 if self.monster_turn < len(self.monsters_list):
                     self.monsters_list[self.monster_turn].move(self.player, self.map)
                     self.map.update_dungeon(old_actors, self.actors_list)
