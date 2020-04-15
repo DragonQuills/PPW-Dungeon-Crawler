@@ -24,10 +24,23 @@ class SkullMonster(Monster):
     def __init__(self, row, col, dungeon_map):
         super().__init__(row, col, arcade.color.BONE, dungeon_map)
 
+        self.max_hp = 20
+        self.curr_hp = max_hp
+        self.attack = 15
+        self.defense = 10
+
 class LampMonster(Monster):
     def __init__(self, row, col, dungeon_map):
         super().__init__(row, col, arcade.color.ALLOY_ORANGE, dungeon_map)
+        self.max_hp = 15
+        self.curr_hp = max_hp
+        self.attack = 10
+        self.defense = 15
 
 class FishMonster(Monster):
     def __init__(self, row, col, dungeon_map):
         super().__init__(row, col, arcade.color.AIR_SUPERIORITY_BLUE, dungeon_map)
+        self.max_hp = 25
+        self.curr_hp = max_hp
+        self.attack = 10
+        self.defense = 10

@@ -7,6 +7,12 @@ class Actor(arcade.Sprite):
         self._color = color
         self.facing = DOWN
 
+        # Attack attributes
+        self.max_hp
+        self.curr_hp
+        self.attack
+        self.defense
+
     # this converts the actor's current row and column to an x and y that arcade uses to draw the actor
     def get_x_y(self):
         x = (MARGIN + WIDTH) * self.col + MARGIN + WIDTH // 2

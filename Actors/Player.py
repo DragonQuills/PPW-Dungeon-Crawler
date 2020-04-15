@@ -6,3 +6,8 @@ class Player(Actor):
         col = 1
 
         super().__init__(row, col, arcade.color.TEAL)
+
+        self.max_hp = 100
+        self.curr_hp = max_hp
+        self.attack = 20
+        self.defense = 8
