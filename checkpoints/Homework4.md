@@ -20,4 +20,5 @@ My original plan to get done by the final deadline was largely getting sprites, 
 
 In short, I will complete MonsterSpawner so it can spawn monsters, have one room for the player to run around in, and have the ability to attack and kill (or be killed by) monsters.
 
-4. Gif of Game Running
+4. Videos of Game Running
+I have 2 videos, one called Homework4Full and one called Homework4Short. The full version is about 8 minutes long and very comprehensive but it might be a bit rambley, I just wanted to be very thorough. The short version goes over the same stuff but in less detail and much quicker (about 3 minutes)
