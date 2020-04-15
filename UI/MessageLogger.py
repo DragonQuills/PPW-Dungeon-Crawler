@@ -18,7 +18,6 @@ class MessageLogger():
     @classmethod
     def instance(cls):
         if cls._instance is None:
-            print('Creating new instance')
             cls._instance = cls.__new__(cls)
             cls.messages = []
         return cls._instance
@@ -30,7 +29,6 @@ class MessageLogger():
 
     # Adds messages up to the MAX_MESSAGES_ON_SCREEN cap, then removes the oldest message
     def push_message(self, message):
-        print(MAX_MESSAGES_ON_SCREEN)
         if len(self.messages) < MAX_MESSAGES_ON_SCREEN:
             self.messages.append(message)
         else:
