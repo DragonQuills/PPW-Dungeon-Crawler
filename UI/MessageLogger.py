@@ -19,9 +19,19 @@ class MessageLogger():
             print('Creating new instance')
             cls._instance = cls.__new__(cls)
             # Put any initialization here.
-            cls.messages = ["Demo message", "Second demo"]
+            cls.messages = []
         return cls._instance
 
     def draw(self, starting_x, starting_y, message_margin):
         for i in range(0, len(self.messages)):
             arcade.draw_text(self.messages[i], starting_x, starting_y - (i * message_margin), arcade.color.COPPER, message_margin)
+
+    def push_message(self, message):
+        print(MAX_MESSAGES_ON_SCREEN)
+        if len(self.messages) < MAX_MESSAGES_ON_SCREEN:
+            print("addign message")
+            self.messages.append(message)
+        else:
+            print("Popping message")
+            self.messages.pop(0)
+            self.messages.append(message)
