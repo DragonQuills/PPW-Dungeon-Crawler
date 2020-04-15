@@ -8,7 +8,6 @@ If Python and Arcade are installed, this example can be run from the command lin
 python -m arcade.examples.starting_template
 """
 
-import time
 import copy
 
 from definitions import *

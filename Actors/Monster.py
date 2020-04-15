@@ -10,7 +10,10 @@ class Monster(Actor):
     # overwritten to use the AI to determine the move to make
     def move(self, player, dungeon_map):
         next_move = self.ai.next_move(self, player)
-        self.facing = self.determine_direction(next_move.row, next_move.col)
+        if next_move.row == self.row and next_move.col == self.col:
+            self.facing = self.determine_direction(player.row, player.col)
+        else:
+            self.facing = self.determine_direction(next_move.row, next_move.col)
 
         #Checking for collisions with other monsters
         if dungeon_map.grid[next_move.row][next_move.col] == FLOOR:
