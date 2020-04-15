@@ -8,10 +8,10 @@ class Actor(arcade.Sprite):
         self.facing = DOWN
 
         # Attack attributes
-        self.max_hp
-        self.curr_hp
-        self.attack
-        self.defense
+        self.max_hp = None
+        self.curr_hp = None
+        self.attack = None
+        self.defense = None
 
     # this converts the actor's current row and column to an x and y that arcade uses to draw the actor
     def get_x_y(self):
