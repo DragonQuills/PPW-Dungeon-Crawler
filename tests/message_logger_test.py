@@ -1,5 +1,6 @@
 import pytest
 from UI.MessageLogger import MessageLogger
+from definitions import *
 
 def test_messagelogger_is_singleton():
     with pytest.raises(RuntimeError):
@@ -8,11 +9,24 @@ def test_messagelogger_is_singleton():
     m3 = MessageLogger.instance()
     assert(m2 is m3)
 
-def test_push_message():
-    MAX_MESSAGES_ON_SCREEN = 2
+@pytest.fixture(scope = 'module')
+def global_data():
+    return {'MAX_MESSAGES_ON_SCREEN': 2}
+
+
+def test_push_message_under_limit():
     m = MessageLogger.instance()
     m.push_message("test1")
     m.push_message("test2")
     assert(m.messages == ["test1", "test2"])
-    m.push_message("test3")
-    assert(m.messages == ["test2", "test3"])
+
+
+def test_push_message_over_limit():
+    m = MessageLogger.instance()
+    correct_list = []
+    for i in range(0, MAX_MESSAGES_ON_SCREEN + 1):
+        m.push_message("test" + str(i))
+        if i > 0:
+            correct_list.append("test" + str(i))
+
+    assert(m.messages == correct_list)
