@@ -240,17 +240,15 @@ class MyGame(arcade.Window):
     def attack(self, attacker, defender):
         # Attacked an invalid position, like a wall or the floor
         if defender == FLOOR:
-            self.message_logger.push_message("You swing your sword at the air.")
+            message = "You swing your sword at the air."
         elif defender == WALL:
-            self.message_logger.push_message("Your sword clangs against the stone wall.")
+            message = "Your sword clangs against the stone wall."
         # Attacked a monster
         else:
-            # message1 = "You are trying to attack square (" + str(attack_location[0]) + ", " + str(attack_location[1]) + ")"
-            # message2 = "You are trying to attack the " + str(self.get_actor_at_position(attack_location[0], attack_location[1]))
-            # self.message_logger.push_message(message1)
-            # self.message_logger.push_message(message2)
-            pass
+            damage = self.player.determine_damage(defender)
+            message = "You attack the " + str(defender) + " for " + str(damage) + " damage."
 
+        self.message_logger.push_message(message)
         self.player_end_of_turn()
 
     def player_end_of_turn(self):
