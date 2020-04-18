@@ -23,7 +23,7 @@ def test_determine_damage():
     skull = SkullMonster(0, 0, dungeon_map)
 
     # Should be 10 because player.attack - skull.defense is 10
-    assert( player.determine_damage(skull) == 10)
+    assert( 8 <= player.determine_damage(skull) <= 12)
 
 def test_get_square_in_direction():
     actor = Actor(1, 1, arcade.color.PINK)
