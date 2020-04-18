@@ -90,8 +90,6 @@ class MyGame(arcade.Window):
         self.monsters_list = []
         self.monsters_list.append(LampMonster(4, 4, self.map))
         self.monsters_list.append(SkullMonster(5, 6, self.map))
-        # self.monsters_list.append(SkullMonster(5, 7, self.map))
-        # self.monsters_list.append(SkullMonster(5, 8, self.map))
 
         self.actors_list = []
         self.actors_list.append(self.player)
@@ -196,25 +194,31 @@ class MyGame(arcade.Window):
                 self.key_pressed = None
                 self.key_modifiers = None
 
-    # moves and/or changes the direction of the player based on the key pressed
+    '''
+    Moves and/or changes the direction of the player based on the key pressed
+    '''
     def player_turn(self, direction, key_modifiers):
         # we should always change the direction if the player hit an arrow key
         self.player.change_facing(direction)
 
-        # if the player hit shift+arrow, they should change directions but not move
+        # If the player hit shift+arrow, they should change directions but not move
         # and the player's turn shouldn't end
         if(not player_collision(self.player, direction, self.map) and key_modifiers != arcade.key.MOD_SHIFT):
             self.player.move(direction)
             self.is_players_turn = False
             self.turn_count += 1
+            # If the correct number of tursn have passed
+            # and we are under the cap for max monsters
             if self.turn_count % TURNS_BETWEEN_MONSTER_SPAWN == 0 and len(self.monsters_list) < MAX_MONSTERS:
                 self.spawn_monster()
             self.monster_move_timer = 0
 
+    '''
+    Uses the MonsterSpawner to spawn in a new monster
+    '''
     def spawn_monster(self):
         monster = self.spawner.get_monster("random", self.map)
         monster = self.spawner.find_location_for_monster(monster, self.map, self.player)
-        # print("spawn code running")
         self.monsters_list.append(monster)
         self.actors_list.append(monster)
 

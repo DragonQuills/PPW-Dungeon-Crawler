@@ -41,7 +41,7 @@ class MonsterSpawner:
         valid_locations = []
         for row in range(0, ROW_COUNT):
             for col in range(0, COLUMN_COUNT):
-                #quicker check first
+                # Make sure the tile is a floor and not too clsoe to the player
                 if(dungeon_map.grid[row][col] == FLOOR and len(monster.ai.solve(monster, player)) >= SPAWN_DISTANCE_FROM_PLAYER):
                     valid_locations.append(Position(row, col))
         position = choice(valid_locations)
