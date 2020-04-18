@@ -38,7 +38,7 @@ class Actor(arcade.Sprite):
         self.facing = direction
 
     '''
-    Given a row and column, determines if that sapce is next to the actor,
+    Given a row and column, determines if that space is next to the actor,
     and if so returns the direction the square is.
     '''
     def determine_direction(self, row, col):
@@ -54,5 +54,5 @@ class Actor(arcade.Sprite):
 
     def get_square_in_direction(self, direction):
         row = self.row + direction[0]
-        col = self.row + direction[1]
+        col = self.col + direction[1]
         return [row, col]

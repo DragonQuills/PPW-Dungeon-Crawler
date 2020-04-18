@@ -32,3 +32,9 @@ def test_get_square_in_direction():
     assert(actor.get_square_in_direction(DOWN) == [0, 1] )
     assert(actor.get_square_in_direction(LEFT) == [1, 0] )
     assert(actor.get_square_in_direction(RIGHT) == [1, 2] )
+
+    actor.row = 10
+    actor.col = 8
+    actor.change_facing(UP)
+
+    assert(actor.get_square_in_direction(actor.facing) == [11, 8])
