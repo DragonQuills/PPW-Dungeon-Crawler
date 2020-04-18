@@ -171,6 +171,7 @@ class MyGame(arcade.Window):
             if self.monster_move_timer > 7 - len(self.monsters_list * 2):
                 # if there are still monsters who haven't taken their turn
                 if self.monster_turn < len(self.monsters_list):
+                    print( "monster moving")
                     self.monsters_list[self.monster_turn].move(self.player, self.map)
                     self.map.update_dungeon(old_actors, self.actors_list)
                     self.monster_turn += 1
@@ -220,10 +221,13 @@ class MyGame(arcade.Window):
     Uses the MonsterSpawner to spawn in a new monster
     '''
     def spawn_monster(self):
+        # update map
+        self.map.update_dungeon(self.actors_list, [])
         monster = self.spawner.get_monster("random", self.map)
         monster = self.spawner.find_location_for_monster(monster, self.map, self.player)
         self.monsters_list.append(monster)
         self.actors_list.append(monster)
+        self.map.update_dungeon(self.actors_list, self.actors_list)
 
     '''
     Given a specific position, find the actor there
