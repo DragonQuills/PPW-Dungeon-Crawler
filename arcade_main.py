@@ -145,16 +145,22 @@ class MyGame(arcade.Window):
         # if it is the player's turn and they pressed a valid key
         if self.is_players_turn and self.key_pressed != None:
             #do the player's action
-            self.player_turn(self.key_pressed, self.key_modifiers)
+            if self.key_pressed != arcade.key.SPACE:
+                self.player_move(self.key_pressed, self.key_modifiers)
+            else:
+                attack_location = self.player.get_square_in_direction(self.player.facing)
+                message1 = "You are trying to attack square (" + str(attack_location[0]) + ", " + str(attack_location[1]) + ")"
+                message2 = "You are trying to attack the " + str(self.get_actor_at_position(attack_location[0], attack_location[1]))
+                self.message_logger.push_message(message1)
+                self.message_logger.push_message(message2)
             self.key_pressed = None
 
             # updating the dungeon so collisions can be detected when the monsters move
             self.map.update_dungeon(old_actors, self.actors_list)
-            self.map.recreate_shapes()
 
             #this is just to show that the messager is working
-            message = "You moved to square (" + str(self.player.row) + ", " + str(self.player.col) + ")"
-            self.message_logger.push_message(message)
+            # message = "You moved to square (" + str(self.player.row) + ", " + str(self.player.col) + ")"
+            # self.message_logger.push_message(message)
 
         old_actors = copy.deepcopy(self.actors_list)
 
@@ -190,6 +196,9 @@ class MyGame(arcade.Window):
             elif key == arcade.key.RIGHT or key == arcade.key.D:
                 self.key_pressed = RIGHT
                 self.key_modifiers = modifiers
+            elif key == arcade.key.SPACE:
+                self.key_pressed = arcade.key.SPACE
+                self.key_modifiers = modifiers
             else:
                 self.key_pressed = None
                 self.key_modifiers = None
@@ -197,7 +206,7 @@ class MyGame(arcade.Window):
     '''
     Moves and/or changes the direction of the player based on the key pressed
     '''
-    def player_turn(self, direction, key_modifiers):
+    def player_move(self, direction, key_modifiers):
         # we should always change the direction if the player hit an arrow key
         self.player.change_facing(direction)
 
@@ -221,6 +230,21 @@ class MyGame(arcade.Window):
         monster = self.spawner.find_location_for_monster(monster, self.map, self.player)
         self.monsters_list.append(monster)
         self.actors_list.append(monster)
+
+    '''
+    Given a specific position, find the actor there
+    Used for attacking.
+    '''
+    def get_actor_at_position(self, row, col):
+        # check if there even is an actor there
+        if self.map.grid[row][col] != ACTOR:
+            return None
+        for actor in self.actors_list:
+            if actor.row == row and actor.col == col:
+                return actor
+
+    def attack(self, attacker, defender):
+        pass
 
 
 def main():
