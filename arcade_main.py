@@ -149,10 +149,10 @@ class MyGame(arcade.Window):
                 self.player_move(self.key_pressed, self.key_modifiers)
             else:
                 attack_location = self.player.get_square_in_direction(self.player.facing)
-                message1 = "You are trying to attack square (" + str(attack_location[0]) + ", " + str(attack_location[1]) + ")"
-                message2 = "You are trying to attack the " + str(self.get_actor_at_position(attack_location[0], attack_location[1]))
-                self.message_logger.push_message(message1)
-                self.message_logger.push_message(message2)
+                defender = self.get_actor_at_position(attack_location[0], attack_location[1])
+
+                self.attack(self.player, defender)
+
             self.key_pressed = None
 
             # updating the dungeon so collisions can be detected when the monsters move
@@ -214,13 +214,7 @@ class MyGame(arcade.Window):
         # and the player's turn shouldn't end
         if(not player_collision(self.player, direction, self.map) and key_modifiers != arcade.key.MOD_SHIFT):
             self.player.move(direction)
-            self.is_players_turn = False
-            self.turn_count += 1
-            # If the correct number of tursn have passed
-            # and we are under the cap for max monsters
-            if self.turn_count % TURNS_BETWEEN_MONSTER_SPAWN == 0 and len(self.monsters_list) < MAX_MONSTERS:
-                self.spawn_monster()
-            self.monster_move_timer = 0
+            self.player_end_of_turn()
 
     '''
     Uses the MonsterSpawner to spawn in a new monster
@@ -238,13 +232,36 @@ class MyGame(arcade.Window):
     def get_actor_at_position(self, row, col):
         # check if there even is an actor there
         if self.map.grid[row][col] != ACTOR:
-            return None
+            return self.map.grid[row][col]
         for actor in self.actors_list:
             if actor.row == row and actor.col == col:
                 return actor
 
     def attack(self, attacker, defender):
-        pass
+        # Attacked an invalid position, like a wall or the floor
+        if defender == FLOOR:
+            self.message_logger.push_message("You swing your sword at the air.")
+        elif defender == WALL:
+            self.message_logger.push_message("Your sword clangs against the stone wall.")
+        # Attacked a monster
+        else:
+            # message1 = "You are trying to attack square (" + str(attack_location[0]) + ", " + str(attack_location[1]) + ")"
+            # message2 = "You are trying to attack the " + str(self.get_actor_at_position(attack_location[0], attack_location[1]))
+            # self.message_logger.push_message(message1)
+            # self.message_logger.push_message(message2)
+            pass
+
+        self.player_end_of_turn()
+
+    def player_end_of_turn(self):
+        self.is_players_turn = False
+        self.turn_count += 1
+        # If the correct number of tursn have passed
+        # and we are under the cap for max monsters
+        if self.turn_count % TURNS_BETWEEN_MONSTER_SPAWN == 0 and len(self.monsters_list) < MAX_MONSTERS:
+            self.spawn_monster()
+        self.monster_move_timer = 0
+
 
 
 def main():
