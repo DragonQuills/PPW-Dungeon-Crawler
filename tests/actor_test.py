@@ -1,6 +1,7 @@
 from Actors.Actor import *
 from Actors.Monster import *
 from Actors.Player import Player
+from definitions import UP, DOWN, LEFT, RIGHT
 
 def test_determine_direction():
     actor = Actor(1, 1, arcade.color.PINK)
@@ -23,3 +24,11 @@ def test_determine_damage():
 
     # Should be 10 because player.attack - skull.defense is 10
     assert( player.determine_damage(skull) == 10)
+
+def test_get_square_in_direction():
+    actor = Actor(1, 1, arcade.color.PINK)
+
+    assert(actor.get_square_in_direction(UP) == [2, 1] )
+    assert(actor.get_square_in_direction(DOWN) == [0, 1] )
+    assert(actor.get_square_in_direction(LEFT) == [1, 0] )
+    assert(actor.get_square_in_direction(RIGHT) == [1, 2] )
