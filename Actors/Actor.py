@@ -1,4 +1,5 @@
 from definitions import *
+from random import randint
 
 class Actor(arcade.Sprite):
     def __init__(self, row, col, color):
@@ -50,7 +51,8 @@ class Actor(arcade.Sprite):
             return NULL
 
     def determine_damage(self, other_actor):
-        return self.attack - other_actor.defense
+        #slight stat randomization
+        return (self.attack - other_actor.defense) + randint(-2, 2)
 
     def get_square_in_direction(self, direction):
         row = self.row + direction[0]
