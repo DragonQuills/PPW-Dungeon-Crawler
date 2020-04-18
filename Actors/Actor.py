@@ -19,7 +19,6 @@ class Actor(arcade.Sprite):
         y = (MARGIN + HEIGHT) * self.row + MARGIN + HEIGHT // 2 + TEXT_BOX_HEIGHT
         return [x, y]
 
-    #
     def draw(self):
         x, y = self.get_x_y()
         # draw the main body of the actor
