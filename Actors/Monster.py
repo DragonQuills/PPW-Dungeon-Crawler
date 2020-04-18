@@ -10,8 +10,12 @@ class Monster(Actor):
     # overwritten to use the AI to determine the move to make
     def move(self, player, dungeon_map):
         next_move = self.ai.next_move(self, player)
+
+        # The AI says not to move, so just face the player
         if next_move.row == self.row and next_move.col == self.col:
             self.facing = self.determine_direction(player.row, player.col)
+            return False
+        # The AI says to move, so face the way we're moving
         else:
             self.facing = self.determine_direction(next_move.row, next_move.col)
 
@@ -19,6 +23,8 @@ class Monster(Actor):
         if dungeon_map.grid[next_move.row][next_move.col] == FLOOR:
             self.row = next_move.row
             self.col = next_move.col
+            return True
+        return False
 
 class SkullMonster(Monster):
     def __init__(self, row, col, dungeon_map):
