@@ -58,3 +58,6 @@ class Actor(arcade.Sprite):
         row = self.row + direction[0]
         col = self.col + direction[1]
         return [row, col]
+
+    def is_dead(self):
+        return self.curr_hp <= 0

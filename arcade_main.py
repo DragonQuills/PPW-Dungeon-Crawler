@@ -168,7 +168,7 @@ class MyGame(arcade.Window):
             # The move timer slows the monsters down so they don't all move at once
             self.monster_move_timer += 1
 
-            if self.monster_move_timer > 10 - len(self.monsters_list * 3):
+            if self.monster_move_timer > 7 - len(self.monsters_list * 2):
                 # if there are still monsters who haven't taken their turn
                 if self.monster_turn < len(self.monsters_list):
                     self.monsters_list[self.monster_turn].move(self.player, self.map)
@@ -246,7 +246,15 @@ class MyGame(arcade.Window):
         # Attacked a monster
         else:
             damage = self.player.determine_damage(defender)
+            defender.curr_hp -= damage
             message = "You attack the " + str(defender) + " for " + str(damage) + " damage."
+            # self.message_logger.push_message(message)
+            if defender.is_dead():
+                self.message_logger.push_message(message)
+                self.monsters_list.remove(defender)
+                self.actors_list.remove(defender)
+                message = "The " + str(defender) + " dies."
+
 
         self.message_logger.push_message(message)
         self.player_end_of_turn()
