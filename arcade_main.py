@@ -16,6 +16,7 @@ from Maps.DungeonMap import DungeonMap
 from Actors.Player import Player
 from Actors.Monster import *
 from UI.MessageLogger import MessageLogger
+from Spawners.MonsterSpawner import MonsterSpawner
 
 """
 Detects if the direction the player is trying to move to is valid
@@ -67,6 +68,16 @@ class MyGame(arcade.Window):
         self.text_box = None
         self.message_logger = None
 
+        #used to spawn monsters
+        self.spawner = None
+
+        # Increments when the player takes a turn
+        # Used to decide when to spawn in monsters
+        # If I have time, also will spawn in heal tiles
+        # and will provide the player a bonus at end of the game
+        # based on how long they survived for
+        self.turn_count = None
+
 
     def setup(self):
         """
@@ -79,6 +90,8 @@ class MyGame(arcade.Window):
         self.monsters_list = []
         self.monsters_list.append(LampMonster(4, 4, self.map))
         self.monsters_list.append(SkullMonster(5, 6, self.map))
+        # self.monsters_list.append(SkullMonster(5, 7, self.map))
+        # self.monsters_list.append(SkullMonster(5, 8, self.map))
 
         self.actors_list = []
         self.actors_list.append(self.player)
@@ -97,6 +110,10 @@ class MyGame(arcade.Window):
         self.text_box.width = SCREEN_WIDTH + MARGIN
         self.text_box.height = TEXT_BOX_HEIGHT + MARGIN
         self.message_logger = MessageLogger.instance()
+
+        self.spawner = MonsterSpawner()
+
+        self.turn_count = 0
 
     def on_draw(self):
         """
@@ -147,7 +164,7 @@ class MyGame(arcade.Window):
             # The move timer slows the monsters down so they don't all move at once
             self.monster_move_timer += 1
 
-            if self.monster_move_timer > 5:
+            if self.monster_move_timer > 10 - len(self.monsters_list * 3):
                 # if there are still monsters who haven't taken their turn
                 if self.monster_turn < len(self.monsters_list):
                     self.monsters_list[self.monster_turn].move(self.player, self.map)
@@ -190,7 +207,17 @@ class MyGame(arcade.Window):
         if(not player_collision(self.player, direction, self.map) and key_modifiers != arcade.key.MOD_SHIFT):
             self.player.move(direction)
             self.is_players_turn = False
+            self.turn_count += 1
+            if self.turn_count % TURNS_BETWEEN_MONSTER_SPAWN == 0 and len(self.monsters_list) < MAX_MONSTERS:
+                self.spawn_monster()
             self.monster_move_timer = 0
+
+    def spawn_monster(self):
+        monster = self.spawner.get_monster("random", self.map)
+        monster = self.spawner.find_location_for_monster(monster, self.map, self.player)
+        # print("spawn code running")
+        self.monsters_list.append(monster)
+        self.actors_list.append(monster)
 
 
 def main():
