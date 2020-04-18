@@ -13,9 +13,9 @@ class MonsterSpawner:
             monster = FishMonster(0, 0, dungeon_map)
         else:
             rand = randint(0, 2)
-            if rand = 0:
+            if rand == 0:
                 monster = SkullMonster(0, 0, dungeon_map)
-            elif rand = 2:
+            elif rand == 2:
                 monster = LampMonster(0, 0, dungeon_map)
             else:
                 monster = FishMonster(0, 0, dungeon_map)
