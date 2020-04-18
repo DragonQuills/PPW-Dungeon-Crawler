@@ -11,3 +11,5 @@ class Player(Actor):
         self.curr_hp = self.max_hp
         self.attack = 20
         self.defense = 8
+    def __str__(self):
+        return "brave and noble player"

@@ -29,6 +29,9 @@ class SkullMonster(Monster):
         self.attack = 15
         self.defense = 10
 
+    def __str__(self):
+        return "scary floating skull"
+
 class LampMonster(Monster):
     def __init__(self, row, col, dungeon_map):
         super().__init__(row, col, arcade.color.ALLOY_ORANGE, dungeon_map)
@@ -36,6 +39,8 @@ class LampMonster(Monster):
         self.curr_hp = self.max_hp
         self.attack = 10
         self.defense = 15
+    def __str__(self):
+        return "giant robot lamp"
 
 class FishMonster(Monster):
     def __init__(self, row, col, dungeon_map):
@@ -44,3 +49,5 @@ class FishMonster(Monster):
         self.curr_hp = self.max_hp
         self.attack = 10
         self.defense = 10
+    def __str__(self):
+        return "skeletal floating fish"
