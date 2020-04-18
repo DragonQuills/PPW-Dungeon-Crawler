@@ -45,3 +45,8 @@ DOWN = [-1, 0]
 LEFT = [0, -1]
 RIGHT = [0, 1]
 NULL = [0, 0]
+
+# Sort of a difficulty level - lower turns b/w mean monsters spawn more often
+# while higher max monsters lets more monsters be on screen at once.
+TURNS_BETWEEN_MONSTER_SPAWN = 10
+MAX_MONSTERS = 5
