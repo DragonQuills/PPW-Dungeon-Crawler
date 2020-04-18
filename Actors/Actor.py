@@ -48,3 +48,6 @@ class Actor(arcade.Sprite):
             return [temp_row, temp_col]
         else:
             return NULL
+
+    def determine_damage(self, other_actor):
+        return self.attack - other_actor.defense
