@@ -51,3 +51,8 @@ class Actor(arcade.Sprite):
 
     def determine_damage(self, other_actor):
         return self.attack - other_actor.defense
+
+    def get_square_in_direction(self, direction):
+        row = self.row + direction[0]
+        col = self.row + direction[1]
+        return [row, col]
