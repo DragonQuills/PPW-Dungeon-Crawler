@@ -50,3 +50,4 @@ NULL = [0, 0]
 # while higher max monsters lets more monsters be on screen at once.
 TURNS_BETWEEN_MONSTER_SPAWN = 10
 MAX_MONSTERS = 5
+SPAWN_DISTANCE_FROM_PLAYER = 10

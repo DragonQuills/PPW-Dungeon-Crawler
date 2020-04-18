@@ -2,7 +2,7 @@ from Actors.Monster import FishMonster
 from Actors.Player import Player
 from Spawners.MonsterSpawner import MonsterSpawner
 from Maps.DungeonMap import DungeonMap
-from definitions import FLOOR
+from definitions import FLOOR, SPAWN_DISTANCE_FROM_PLAYER
 
 def test_spawner_get_monster():
     spawner = MonsterSpawner()
@@ -29,4 +29,4 @@ def test_find_location_for_monster():
     assert(dungeon.grid[fish.row][fish.col] == FLOOR)
 
     # using the monster AI to tell how far we are from the player
-    assert( len(fish.ai.solve(fish, player)) >= 10 )
+    assert( len(fish.ai.solve(fish, player)) >= SPAWN_DISTANCE_FROM_PLAYER )
