@@ -96,5 +96,5 @@ class MonsterAI:
         if(not path == []): # if there is a path to the player
             if(not player_position == path[0] and not player_position == path[1]): #if the monster is not right next to the player
                 return path[1]
-        #the monster shouldn't try to move since it's either trapped or next to the player.
+        # The monster shouldn't try to move since it's either trapped or next to the player.
         return Position(monster.row, monster.col)

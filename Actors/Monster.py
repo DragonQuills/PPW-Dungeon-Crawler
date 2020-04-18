@@ -10,7 +10,10 @@ class Monster(Actor):
     # overwritten to use the AI to determine the move to make
     def move(self, player, dungeon_map):
         next_move = self.ai.next_move(self, player)
-        self.facing = self.determine_direction(next_move.row, next_move.col)
+        if next_move.row == self.row and next_move.col == self.col:
+            self.facing = self.determine_direction(player.row, player.col)
+        else:
+            self.facing = self.determine_direction(next_move.row, next_move.col)
 
         #Checking for collisions with other monsters
         if dungeon_map.grid[next_move.row][next_move.col] == FLOOR:
@@ -21,10 +24,23 @@ class SkullMonster(Monster):
     def __init__(self, row, col, dungeon_map):
         super().__init__(row, col, arcade.color.BONE, dungeon_map)
 
+        self.max_hp = 20
+        self.curr_hp = self.max_hp
+        self.attack = 15
+        self.defense = 10
+
 class LampMonster(Monster):
     def __init__(self, row, col, dungeon_map):
         super().__init__(row, col, arcade.color.ALLOY_ORANGE, dungeon_map)
+        self.max_hp = 15
+        self.curr_hp = self.max_hp
+        self.attack = 10
+        self.defense = 15
 
 class FishMonster(Monster):
     def __init__(self, row, col, dungeon_map):
         super().__init__(row, col, arcade.color.AIR_SUPERIORITY_BLUE, dungeon_map)
+        self.max_hp = 30
+        self.curr_hp = self.max_hp
+        self.attack = 10
+        self.defense = 10
