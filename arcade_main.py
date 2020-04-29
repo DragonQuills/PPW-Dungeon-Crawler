@@ -259,7 +259,8 @@ class MyGame(arcade.Window):
                     message = "The " + str(defender) + " dies."
                 else:
                     # code for player death here
-                    pass
+                    self.message_logger.push_message(message)
+                    message = "You have succumbed to your wounds..."
         self.message_logger.push_message(message)
         self.player_end_of_turn()
 
