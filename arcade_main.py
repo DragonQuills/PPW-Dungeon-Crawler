@@ -142,12 +142,14 @@ class MyGame(arcade.Window):
         #this is needed by the map to replace the actor tiles with floor tiles
         old_actors = copy.deepcopy(self.actors_list)
 
-        # if it is the player's turn and they pressed a valid key
+        # If it is the player's turn and they pressed a valid key
         if self.is_players_turn and self.key_pressed != None:
-            #do the player's action
+
             if self.key_pressed != arcade.key.SPACE:
+                # An arrow was pressed, so move
                 self.player_move(self.key_pressed, self.key_modifiers)
             else:
+                # Space was pressed, attack the square in fornt fo the player
                 attack_location = self.player.get_square_in_direction(self.player.facing)
                 defender = self.get_actor_at_position(attack_location[0], attack_location[1])
 
@@ -155,7 +157,7 @@ class MyGame(arcade.Window):
 
             self.key_pressed = None
 
-            # updating the dungeon so collisions can be detected when the monsters move
+            # Updating the dungeon so collisions can be detected when the monsters move
             self.map.update_dungeon(old_actors, self.actors_list)
 
         old_actors = copy.deepcopy(self.actors_list)
@@ -174,7 +176,7 @@ class MyGame(arcade.Window):
                         square_monster_is_facing = self.monsters_list[self.monster_turn].get_square_in_direction(self.monsters_list[self.monster_turn].facing)
 
                         #if the monster is next to and facing the player
-                        if square_monster_is_facing == [self.player.row, self.player.col]:
+                        if self.get_actor_at_position(square_monster_is_facing[0], square_monster_is_facing[1]) == self.player:
                             self.attack(self.monsters_list[self.monster_turn], self.player)
 
                     self.map.update_dungeon(old_actors, self.actors_list)
@@ -245,6 +247,14 @@ class MyGame(arcade.Window):
             if actor.row == row and actor.col == col:
                 return actor
 
+    '''
+    Function for the monster or player attacking
+    This is called from on_update if the player pressed space or if
+    the monster didn't move and is next to the player
+    It deals damage to the damaged actor and puts messages in the log
+    to tell the player how much damage was dealt.
+    It also handles monster death, but player death is handled elsewhere.
+    '''
     def attack(self, attacker, defender):
         # Attacked an invalid position, like a wall or the floor
         if defender == FLOOR:
@@ -266,16 +276,16 @@ class MyGame(arcade.Window):
                     self.actors_list.remove(defender)
                     message = "The " + str(defender) + " dies."
                 else:
-                    # code for player death here
                     self.message_logger.push_message(message)
                     message = "You have succumbed to your wounds..."
+                    # TODO: call the player death function when it is written
         self.message_logger.push_message(message)
         self.player_end_of_turn()
 
     def player_end_of_turn(self):
         self.is_players_turn = False
         self.turn_count += 1
-        # If the correct number of tursn have passed
+        # If the correct number of turns have passed
         # and we are under the cap for max monsters
         if self.turn_count % TURNS_BETWEEN_MONSTER_SPAWN == 0 and len(self.monsters_list) < MAX_MONSTERS:
             self.spawn_monster()

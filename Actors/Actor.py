@@ -50,10 +50,18 @@ class Actor(arcade.Sprite):
         else:
             return NULL
 
+    '''
+    Calculates damage this actor does to another actor
+    Does not change the stats of this or the other actor.
+    '''
     def determine_damage(self, other_actor):
         #slight stat randomization
         return (self.attack - other_actor.defense) + randint(-2, 2)
 
+    '''
+    Given a direction (up, down, left, right), returns the row and col
+    of the square next to the actor in that direction
+    '''
     def get_square_in_direction(self, direction):
         row = self.row + direction[0]
         col = self.col + direction[1]
