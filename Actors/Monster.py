@@ -47,7 +47,7 @@ class LampMonster(Monster):
         super().__init__(row, col, arcade.color.ALLOY_ORANGE, dungeon_map)
         self.max_hp = 15
         self.curr_hp = self.max_hp
-        self.attack = 10
+        self.attack = 12
         self.defense = 15
     def __str__(self):
         return "giant robot lamp"
@@ -57,7 +57,7 @@ class FishMonster(Monster):
         super().__init__(row, col, arcade.color.AIR_SUPERIORITY_BLUE, dungeon_map)
         self.max_hp = 30
         self.curr_hp = self.max_hp
-        self.attack = 10
+        self.attack = 12
         self.defense = 10
     def __str__(self):
         return "skeletal floating fish"
