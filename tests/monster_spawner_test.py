@@ -11,7 +11,7 @@ def test_spawner_get_monster():
     fish = spawner.get_monster("fish", dungeon)
 
     assert( isinstance(fish, FishMonster) )
-    assert( 9 <= fish.attack <= 11)
+    assert( 11 <= fish.attack <= 13)
     assert( 9 <= fish.defense <= 11)
 
 # Testing to make sure the monster is now spawning too close to the player or inside of a wall

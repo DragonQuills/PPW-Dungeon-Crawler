@@ -1,4 +1,5 @@
 from definitions import *
+from random import randint
 
 class Actor(arcade.Sprite):
     def __init__(self, row, col, color):
@@ -38,7 +39,7 @@ class Actor(arcade.Sprite):
         self.facing = direction
 
     '''
-    Given a row and column, determines if that sapce is next to the actor,
+    Given a row and column, determines if that space is next to the actor,
     and if so returns the direction the square is.
     '''
     def determine_direction(self, row, col):
@@ -48,3 +49,23 @@ class Actor(arcade.Sprite):
             return [temp_row, temp_col]
         else:
             return NULL
+
+    '''
+    Calculates damage this actor does to another actor
+    Does not change the stats of this or the other actor.
+    '''
+    def determine_damage(self, other_actor):
+        #slight stat randomization
+        return (self.attack - other_actor.defense) + randint(-2, 2)
+
+    '''
+    Given a direction (up, down, left, right), returns the row and col
+    of the square next to the actor in that direction
+    '''
+    def get_square_in_direction(self, direction):
+        row = self.row + direction[0]
+        col = self.col + direction[1]
+        return [row, col]
+
+    def is_dead(self):
+        return self.curr_hp <= 0

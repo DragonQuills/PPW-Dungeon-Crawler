@@ -88,8 +88,6 @@ class MyGame(arcade.Window):
         self.player = Player()
 
         self.monsters_list = []
-        self.monsters_list.append(LampMonster(4, 4, self.map))
-        self.monsters_list.append(SkullMonster(5, 6, self.map))
 
         self.actors_list = []
         self.actors_list.append(self.player)
@@ -112,6 +110,10 @@ class MyGame(arcade.Window):
         self.spawner = MonsterSpawner()
 
         self.turn_count = 0
+
+        for i in range(0, MONSTERS_AT_START):
+            self.spawn_monster()
+
 
     def on_draw(self):
         """
@@ -142,19 +144,23 @@ class MyGame(arcade.Window):
         #this is needed by the map to replace the actor tiles with floor tiles
         old_actors = copy.deepcopy(self.actors_list)
 
-        # if it is the player's turn and they pressed a valid key
+        # If it is the player's turn and they pressed a valid key
         if self.is_players_turn and self.key_pressed != None:
-            #do the player's action
-            self.player_turn(self.key_pressed, self.key_modifiers)
+
+            if self.key_pressed != arcade.key.SPACE:
+                # An arrow was pressed, so move
+                self.player_move(self.key_pressed, self.key_modifiers)
+            else:
+                # Space was pressed, attack the square in fornt fo the player
+                attack_location = self.player.get_square_in_direction(self.player.facing)
+                defender = self.get_actor_at_position(attack_location[0], attack_location[1])
+
+                self.attack(self.player, defender)
+
             self.key_pressed = None
 
-            # updating the dungeon so collisions can be detected when the monsters move
+            # Updating the dungeon so collisions can be detected when the monsters move
             self.map.update_dungeon(old_actors, self.actors_list)
-            self.map.recreate_shapes()
-
-            #this is just to show that the messager is working
-            message = "You moved to square (" + str(self.player.row) + ", " + str(self.player.col) + ")"
-            self.message_logger.push_message(message)
 
         old_actors = copy.deepcopy(self.actors_list)
 
@@ -162,10 +168,19 @@ class MyGame(arcade.Window):
             # The move timer slows the monsters down so they don't all move at once
             self.monster_move_timer += 1
 
-            if self.monster_move_timer > 10 - len(self.monsters_list * 3):
+            if self.monster_move_timer > 7 - len(self.monsters_list * 2):
                 # if there are still monsters who haven't taken their turn
                 if self.monster_turn < len(self.monsters_list):
-                    self.monsters_list[self.monster_turn].move(self.player, self.map)
+                    moved_this_turn = self.monsters_list[self.monster_turn].move(self.player, self.map)
+                    # If the monster didn't move this turn, it might be able to attack
+                    if not moved_this_turn:
+                        # Get the row and col of the square the monster is facing
+                        square_monster_is_facing = self.monsters_list[self.monster_turn].get_square_in_direction(self.monsters_list[self.monster_turn].facing)
+
+                        #if the monster is next to and facing the player
+                        if self.get_actor_at_position(square_monster_is_facing[0], square_monster_is_facing[1]) == self.player:
+                            self.attack(self.monsters_list[self.monster_turn], self.player)
+
                     self.map.update_dungeon(old_actors, self.actors_list)
                     self.monster_turn += 1
                     self.monster_move_timer = 0
@@ -175,8 +190,8 @@ class MyGame(arcade.Window):
             else:
                 return;
 
+    """Called whenever a key is pressed. """
     def on_key_press(self, key, modifiers):
-        """Called whenever a key is pressed. """
         if self.is_players_turn:
             if key == arcade.key.UP or key == arcade.key.W:
                 self.key_pressed = UP
@@ -190,6 +205,9 @@ class MyGame(arcade.Window):
             elif key == arcade.key.RIGHT or key == arcade.key.D:
                 self.key_pressed = RIGHT
                 self.key_modifiers = modifiers
+            elif key == arcade.key.SPACE:
+                self.key_pressed = arcade.key.SPACE
+                self.key_modifiers = modifiers
             else:
                 self.key_pressed = None
                 self.key_modifiers = None
@@ -197,7 +215,7 @@ class MyGame(arcade.Window):
     '''
     Moves and/or changes the direction of the player based on the key pressed
     '''
-    def player_turn(self, direction, key_modifiers):
+    def player_move(self, direction, key_modifiers):
         # we should always change the direction if the player hit an arrow key
         self.player.change_facing(direction)
 
@@ -205,22 +223,76 @@ class MyGame(arcade.Window):
         # and the player's turn shouldn't end
         if(not player_collision(self.player, direction, self.map) and key_modifiers != arcade.key.MOD_SHIFT):
             self.player.move(direction)
-            self.is_players_turn = False
-            self.turn_count += 1
-            # If the correct number of tursn have passed
-            # and we are under the cap for max monsters
-            if self.turn_count % TURNS_BETWEEN_MONSTER_SPAWN == 0 and len(self.monsters_list) < MAX_MONSTERS:
-                self.spawn_monster()
-            self.monster_move_timer = 0
+            self.player_end_of_turn()
 
     '''
     Uses the MonsterSpawner to spawn in a new monster
     '''
     def spawn_monster(self):
+        # update map
+        self.map.update_dungeon(self.actors_list, [])
         monster = self.spawner.get_monster("random", self.map)
         monster = self.spawner.find_location_for_monster(monster, self.map, self.player)
         self.monsters_list.append(monster)
         self.actors_list.append(monster)
+        self.map.update_dungeon(self.actors_list, self.actors_list)
+
+    '''
+    Given a specific position, find the actor there
+    Used for attacking.
+    '''
+    def get_actor_at_position(self, row, col):
+        # check if there even is an actor there
+        if self.map.grid[row][col] != ACTOR:
+            return self.map.grid[row][col]
+        for actor in self.actors_list:
+            if actor.row == row and actor.col == col:
+                return actor
+
+    '''
+    Function for the monster or player attacking
+    This is called from on_update if the player pressed space or if
+    the monster didn't move and is next to the player
+    It deals damage to the damaged actor and puts messages in the log
+    to tell the player how much damage was dealt.
+    It also handles monster death, but player death is handled elsewhere.
+    '''
+    def attack(self, attacker, defender):
+        # Attacked an invalid position, like a wall or the floor
+        if defender == FLOOR:
+            message = "You swing your sword at the air."
+        elif defender == WALL:
+            message = "Your sword clangs against the stone wall."
+        # Attacked another actor
+        else:
+            damage = attacker.determine_damage(defender)
+            defender.curr_hp -= damage
+            if attacker == self.player:
+                message = "You attack the " + str(defender) + " for " + str(damage) + " damage."
+            else:
+                message = "The " + str(attacker) + " attacks you for " + str(damage) + " damage."
+            if defender.is_dead():
+                if isinstance(defender, Monster):
+                    self.message_logger.push_message(message)
+                    self.monsters_list.remove(defender)
+                    self.actors_list.remove(defender)
+                    message = "The " + str(defender) + " dies."
+                else:
+                    self.message_logger.push_message(message)
+                    message = "You have succumbed to your wounds..."
+                    # TODO: call the player death function when it is written
+        self.message_logger.push_message(message)
+        self.player_end_of_turn()
+
+    def player_end_of_turn(self):
+        self.is_players_turn = False
+        self.turn_count += 1
+        # If the correct number of turns have passed
+        # and we are under the cap for max monsters
+        if self.turn_count % TURNS_BETWEEN_MONSTER_SPAWN == 0 and len(self.monsters_list) < MAX_MONSTERS:
+            self.spawn_monster()
+        self.monster_move_timer = 0
+
 
 
 def main():
