@@ -26,7 +26,7 @@ def player_collision(player, direction, map):
 
 
 
-class MyGame(arcade.Window):
+class MyGame(arcade.View):
     """
     Main application class.
 
@@ -35,12 +35,12 @@ class MyGame(arcade.Window):
     with your own code. Don't leave 'pass' in this program.
     """
 
-    def __init__(self, width, height, title):
+    def __init__(self): #, width, height, title):
         """
         Initializes things like the window size and background color
         and declares all class variables
         """
-        super().__init__(width, height, title)
+        super().__init__()
 
         arcade.set_background_color(BACKGROUND_COLOR)
 
@@ -297,8 +297,10 @@ class MyGame(arcade.Window):
 
 def main():
     """ Main method """
-    game = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    game.setup()
+    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+    game_view = MyGame()
+    game_view.setup()
+    window.show_view(game_view)
     arcade.run()
 
 
