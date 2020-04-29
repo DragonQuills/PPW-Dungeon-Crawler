@@ -158,10 +158,6 @@ class MyGame(arcade.Window):
             # updating the dungeon so collisions can be detected when the monsters move
             self.map.update_dungeon(old_actors, self.actors_list)
 
-            #this is just to show that the messager is working
-            # message = "You moved to square (" + str(self.player.row) + ", " + str(self.player.col) + ")"
-            # self.message_logger.push_message(message)
-
         old_actors = copy.deepcopy(self.actors_list)
 
         if not self.is_players_turn:
@@ -182,8 +178,8 @@ class MyGame(arcade.Window):
             else:
                 return;
 
+    """Called whenever a key is pressed. """
     def on_key_press(self, key, modifiers):
-        """Called whenever a key is pressed. """
         if self.is_players_turn:
             if key == arcade.key.UP or key == arcade.key.W:
                 self.key_pressed = UP
@@ -247,19 +243,23 @@ class MyGame(arcade.Window):
             message = "You swing your sword at the air."
         elif defender == WALL:
             message = "Your sword clangs against the stone wall."
-        # Attacked a monster
+        # Attacked another actor
         else:
-            damage = self.player.determine_damage(defender)
+            damage = attacker.determine_damage(defender)
             defender.curr_hp -= damage
-            message = "You attack the " + str(defender) + " for " + str(damage) + " damage."
-            # self.message_logger.push_message(message)
+            if attacker == self.player:
+                message = "You attack the " + str(defender) + " for " + str(damage) + " damage."
+            else:
+                message = "The " + str(attacker) + " attacks you for " + str(damage) + " damage."
             if defender.is_dead():
-                self.message_logger.push_message(message)
-                self.monsters_list.remove(defender)
-                self.actors_list.remove(defender)
-                message = "The " + str(defender) + " dies."
-
-
+                if isinstance(defender, Monster):
+                    self.message_logger.push_message(message)
+                    self.monsters_list.remove(defender)
+                    self.actors_list.remove(defender)
+                    message = "The " + str(defender) + " dies."
+                else:
+                    # code for player death here
+                    pass
         self.message_logger.push_message(message)
         self.player_end_of_turn()
 
