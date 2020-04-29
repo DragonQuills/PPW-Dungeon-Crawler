@@ -26,3 +26,9 @@ def test_push_message_over_limit():
             correct_list.append("test" + str(i))
 
     assert(m.messages == correct_list)
+
+def test_message_logger_clear():
+    m = MessageLogger.instance()
+    m.push_message("test1")
+    m.clear()
+    assert(m.messages == [])
