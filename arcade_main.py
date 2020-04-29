@@ -25,7 +25,7 @@ def player_collision(player, direction, map):
     return(map.get_tile_type(player.row+direction[0], player.col+direction[1]) != FLOOR)
 
 '''
-Code taken https://arcade.academy/examples/view_instructions_and_game_over.html#view-instructions-and-game-over
+Code taken from https://arcade.academy/examples/view_instructions_and_game_over.html#view-instructions-and-game-over
 '''
 class InstructionView(arcade.View):
     def on_show(self):
@@ -33,24 +33,20 @@ class InstructionView(arcade.View):
 
     def on_draw(self):
         arcade.start_render()
-        arcade.draw_text("Instructions Screen", WIDTH/2, HEIGHT/2,
+        arcade.draw_text("Instructions Screen", SCREEN_WIDTH/2, SCREEN_HEIGHT/2,
                          arcade.color.BLACK, font_size=50, anchor_x="center")
-        arcade.draw_text("Click to advance", WIDTH/2, HEIGHT/2-75,
+        arcade.draw_text("Click to advance", SCREEN_WIDTH/2, SCREEN_HEIGHT/2-75,
                          arcade.color.GRAY, font_size=20, anchor_x="center")
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
-        game_view = MyGame()
+        game_view = GameView()
         game_view.setup()
         self.window.show_view(game_view)
 
 
-class MyGame(arcade.View):
+class GameView(arcade.View):
     """
     Main application class.
-
-    NOTE: Go ahead and delete the methods you don't need.
-    If you do need a method, delete the 'pass' and replace it
-    with your own code. Don't leave 'pass' in this program.
     """
 
     def __init__(self): #, width, height, title):
@@ -316,7 +312,7 @@ class MyGame(arcade.View):
 def main():
     """ Main method """
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    # game_view = MyGame()
+    # game_view = GameView()
     # game_view.setup()
     # window.show_view(game_view)
     instrution_view = InstructionView()
