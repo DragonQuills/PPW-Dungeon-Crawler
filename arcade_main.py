@@ -167,8 +167,16 @@ class MyGame(arcade.Window):
             if self.monster_move_timer > 7 - len(self.monsters_list * 2):
                 # if there are still monsters who haven't taken their turn
                 if self.monster_turn < len(self.monsters_list):
-                    print( "monster moving")
-                    self.monsters_list[self.monster_turn].move(self.player, self.map)
+                    moved_this_turn = self.monsters_list[self.monster_turn].move(self.player, self.map)
+                    # If the monster didn't move this turn, it might be able to attack
+                    if not moved_this_turn:
+                        # Get the row and col of the square the monster is facing
+                        square_monster_is_facing = self.monsters_list[self.monster_turn].get_square_in_direction(self.monsters_list[self.monster_turn].facing)
+
+                        #if the monster is next to and facing the player
+                        if square_monster_is_facing == [self.player.row, self.player.col]:
+                            self.attack(self.monsters_list[self.monster_turn], self.player)
+
                     self.map.update_dungeon(old_actors, self.actors_list)
                     self.monster_turn += 1
                     self.monster_move_timer = 0
