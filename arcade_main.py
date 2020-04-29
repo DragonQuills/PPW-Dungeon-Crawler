@@ -153,6 +153,8 @@ class GameView(arcade.View):
         self.text_box.width = SCREEN_WIDTH + MARGIN
         self.text_box.height = TEXT_BOX_HEIGHT + MARGIN
         self.message_logger = MessageLogger.instance()
+        # Clear any messages from the last playthrough
+        self.message_logger.clear()
 
         self.spawner = MonsterSpawner()
 
