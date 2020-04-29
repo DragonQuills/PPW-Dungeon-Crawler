@@ -7,7 +7,11 @@ class Monster(Actor):
         # the AI needs to know the layout of the dungeon to navigate
         self.ai = MonsterAI(dungeon_map)
 
-    # overwritten to use the AI to determine the move to make
+    '''
+    Overwritten to use the AI to determine the move to make.
+    Returns true if they AI spent their turn moving, false if not.
+    If false, the AI might be able to attack (which will happen in the main runner)
+    '''
     def move(self, player, dungeon_map):
         next_move = self.ai.next_move(self, player)
 
