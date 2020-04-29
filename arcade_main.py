@@ -88,8 +88,6 @@ class MyGame(arcade.Window):
         self.player = Player()
 
         self.monsters_list = []
-        self.monsters_list.append(LampMonster(4, 4, self.map))
-        self.monsters_list.append(SkullMonster(5, 6, self.map))
 
         self.actors_list = []
         self.actors_list.append(self.player)
@@ -112,6 +110,10 @@ class MyGame(arcade.Window):
         self.spawner = MonsterSpawner()
 
         self.turn_count = 0
+
+        for i in range(0, MONSTERS_AT_START):
+            self.spawn_monster()
+
 
     def on_draw(self):
         """
