@@ -34,3 +34,6 @@ class MessageLogger():
         else:
             self.messages.pop(0)
             self.messages.append(message)
+
+    def clear(self):
+        self.messages = []
