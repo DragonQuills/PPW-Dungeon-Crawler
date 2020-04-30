@@ -14,7 +14,7 @@ def test_push_message_under_limit():
     m = MessageLogger.instance()
     m.push_message("test1")
     m.push_message("test2")
-    assert(m.messages == ["test1", "test2"])
+    assert(m.messages == ["You wake up in a dungeon...", "test1", "test2"])
 
 
 def test_push_message_over_limit():
@@ -26,3 +26,9 @@ def test_push_message_over_limit():
             correct_list.append("test" + str(i))
 
     assert(m.messages == correct_list)
+
+def test_message_logger_clear():
+    m = MessageLogger.instance()
+    m.push_message("test1")
+    m.clear()
+    assert(m.messages == ["You wake up in a dungeon..."])

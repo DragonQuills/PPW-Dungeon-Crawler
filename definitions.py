@@ -16,7 +16,7 @@ COLUMN_COUNT = 15
 WIDTH = 48
 HEIGHT = 48
 
-# The heihgt of the text box at the bottom of the screen
+# The height of the text box at the bottom of the screen
 TEXT_BOX_HEIGHT = 128
 
 # This sets the margin between each cell

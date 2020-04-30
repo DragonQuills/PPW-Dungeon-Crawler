@@ -19,7 +19,7 @@ class MessageLogger():
     def instance(cls):
         if cls._instance is None:
             cls._instance = cls.__new__(cls)
-            cls.messages = []
+            cls.messages = ["You wake up in a dungeon..."]
         return cls._instance
 
     def draw(self, starting_x, starting_y, message_margin):
@@ -34,3 +34,6 @@ class MessageLogger():
         else:
             self.messages.pop(0)
             self.messages.append(message)
+
+    def clear(self):
+        self.messages = ["You wake up in a dungeon..."]
