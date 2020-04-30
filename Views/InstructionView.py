@@ -3,6 +3,7 @@ from Views.GameView import GameView
 
 '''
 Code taken from https://arcade.academy/examples/view_instructions_and_game_over.html#view-instructions-and-game-over
+A start screen that shows instructions on how to play the game.
 '''
 class InstructionView(arcade.View):
     def on_show(self):

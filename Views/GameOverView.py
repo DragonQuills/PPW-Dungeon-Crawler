@@ -3,6 +3,8 @@ from Views.GameView import GameView
 
 '''
 Code taken from https://arcade.academy/examples/view_instructions_and_game_over.html#view-instructions-and-game-over
+A screen that shows after player death. It allows the player
+to restart the game by clicking.
 '''
 class GameOverView(arcade.View):
     def __init__(self):

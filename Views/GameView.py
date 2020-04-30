@@ -11,12 +11,11 @@ from UI.MessageLogger import MessageLogger
 
 from Spawners.MonsterSpawner import MonsterSpawner
 
-# from Views.GameOverView import *
-
+"""
+Main application class.
+All code for running through the game is in this class
+"""
 class GameView(arcade.View):
-    """
-    Main application class.
-    """
 
     def __init__(self): #, width, height, title):
         """
@@ -116,6 +115,7 @@ class GameView(arcade.View):
             monster.draw()
 
         self.text_box.draw()
+        
         # All the variables plus global variables should make it easier
         # to adjust this if I make the screen larger or smaller
         self.message_logger.draw(self.text_box.width/10, self.text_box.height - self.text_box.height/4, TEXT_SIZE)
@@ -265,6 +265,8 @@ class GameView(arcade.View):
                 else:
                     self.message_logger.push_message(message)
                     message = "You have succumbed to your wounds..."
+                    # Import is here to prevent a weird circular import loop
+                    # at program start
                     from Views.GameOverView import GameOverView
                     game_over_view = GameOverView()
                     self.window.show_view(game_over_view)
