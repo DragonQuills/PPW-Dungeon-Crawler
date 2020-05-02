@@ -27,9 +27,9 @@ class Actor(arcade.Sprite):
         # The only time they are passed in as arguments
         # is on the instruction screen where the actor needs
         # to be drawn in a specific location
-        if(x, y == -1):
+        if(x == -1 and y == -1):
             x, y = self.get_x_y()
-            
+
         # draw the main body of the actor
         icon = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, self.color)
         icon.draw()
