@@ -22,8 +22,14 @@ class Actor(arcade.Sprite):
         y = (MARGIN + HEIGHT) * self.row + MARGIN + HEIGHT // 2 + TEXT_BOX_HEIGHT
         return [x, y]
 
-    def draw(self):
-        x, y = self.get_x_y()
+    def draw(self, x = -1, y = -1):
+        # During gameplay, x and y should never be set.
+        # The only time they are passed in as arguments
+        # is on the instruction screen where the actor needs
+        # to be drawn in a specific location
+        if(x, y == -1):
+            x, y = self.get_x_y()
+            
         # draw the main body of the actor
         icon = arcade.create_rectangle_filled(x, y, WIDTH, HEIGHT, self.color)
         icon.draw()
