@@ -12,8 +12,11 @@ class InstructionView(arcade.View):
         arcade.set_background_color(arcade.color.AUROMETALSAURUS)
 
     def on_draw(self):
+        # There's a lot of random numbers in this code because
+        # I tried to make it so that changing the screen size wouldn't
+        # mess up the placment of the text horribly.
         arcade.start_render()
-        arcade.draw_text("Instructions Screen", SCREEN_WIDTH/2, SCREEN_HEIGHT - 1.5*SCREEN_HEIGHT/10,
+        arcade.draw_text("Instructions", SCREEN_WIDTH/2, SCREEN_HEIGHT - 1.5*SCREEN_HEIGHT/10,
                          arcade.color.BLACK, font_size=50, anchor_x="center")
 
         arcade.draw_text("You look like this: ", SCREEN_WIDTH/20, SCREEN_HEIGHT- 2.5*SCREEN_HEIGHT/10,
@@ -38,19 +41,20 @@ class InstructionView(arcade.View):
         arcade.draw_text("Changing direction won't advance your turn, but attacking always will.",
                          SCREEN_WIDTH/20, SCREEN_HEIGHT- 5*SCREEN_HEIGHT/10,
                          arcade.color.BLACK, font_size=12, anchor_x="left")
+
         arcade.draw_text("Use the arrow keys to move.",
-                         SCREEN_WIDTH/20, SCREEN_HEIGHT- 5.5*SCREEN_HEIGHT/10,
-                         arcade.color.BLACK, font_size=12, anchor_x="left")
-        arcade.draw_text("Shift+arrow key will change the direction you're facing without moving you.",
                          SCREEN_WIDTH/20, SCREEN_HEIGHT- 6*SCREEN_HEIGHT/10,
                          arcade.color.BLACK, font_size=12, anchor_x="left")
-        arcade.draw_text("Space will attack in whatever direction you're facing.",
+        arcade.draw_text("Shift+arrow key will change the direction you're facing without moving you.",
                          SCREEN_WIDTH/20, SCREEN_HEIGHT- 6.5*SCREEN_HEIGHT/10,
                          arcade.color.BLACK, font_size=12, anchor_x="left")
+        arcade.draw_text("Space will attack in whatever direction you're facing.",
+                         SCREEN_WIDTH/20, SCREEN_HEIGHT- 7*SCREEN_HEIGHT/10,
+                         arcade.color.BLACK, font_size=12, anchor_x="left")
 
-        arcade.draw_text("Survive as many turns as you can!", SCREEN_WIDTH/2, SCREEN_HEIGHT- 8.2*SCREEN_HEIGHT/10,
+        arcade.draw_text("Survive as many turns as you can!", SCREEN_WIDTH/2, SCREEN_HEIGHT- 8.5*SCREEN_HEIGHT/10,
                          arcade.color.BLACK, font_size=20, anchor_x="center")
-        arcade.draw_text("Click to advance", SCREEN_WIDTH/2, SCREEN_HEIGHT- 9*SCREEN_HEIGHT/10,
+        arcade.draw_text("Click to advance", SCREEN_WIDTH/2, SCREEN_HEIGHT- 9.3*SCREEN_HEIGHT/10,
                          arcade.color.BLACK, font_size=30, anchor_x="center")
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
