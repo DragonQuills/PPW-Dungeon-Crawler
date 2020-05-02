@@ -18,8 +18,19 @@ class InstructionView(arcade.View):
 
         arcade.draw_text("You look like this: ", SCREEN_WIDTH/20, SCREEN_HEIGHT- 2.5*SCREEN_HEIGHT/10,
                          arcade.color.BLACK, font_size=12, anchor_x="left")
+        p = Player()
+        p.draw(3.5*SCREEN_WIDTH/10, SCREEN_HEIGHT-2.4*SCREEN_HEIGHT/10)
+
         arcade.draw_text("The monsters look like this: ", SCREEN_WIDTH/20, SCREEN_HEIGHT- 3.5*SCREEN_HEIGHT/10,
                          arcade.color.BLACK, font_size=12, anchor_x="left")
+        l = LampMonster(0, 0, None)
+        s = SkullMonster(0, 0, None)
+        f = FishMonster(0, 0, None)
+
+        l.draw(4.5*SCREEN_WIDTH/10, SCREEN_HEIGHT-3.4*SCREEN_HEIGHT/10)
+        s.draw(5.5*SCREEN_WIDTH/10, SCREEN_HEIGHT-3.4*SCREEN_HEIGHT/10)
+        f.draw(6.5*SCREEN_WIDTH/10, SCREEN_HEIGHT-3.4*SCREEN_HEIGHT/10)
+
 
         arcade.draw_text("The game is turn based. You take your turn by attacking or moving.",
                          SCREEN_WIDTH/20, SCREEN_HEIGHT- 4.5*SCREEN_HEIGHT/10,
