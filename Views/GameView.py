@@ -115,7 +115,7 @@ class GameView(arcade.View):
             monster.draw()
 
         self.text_box.draw()
-        
+
         # All the variables plus global variables should make it easier
         # to adjust this if I make the screen larger or smaller
         self.message_logger.draw(self.text_box.width/10, self.text_box.height - self.text_box.height/4, TEXT_SIZE)
@@ -269,6 +269,7 @@ class GameView(arcade.View):
                     # at program start
                     from Views.GameOverView import GameOverView
                     game_over_view = GameOverView()
+                    game_over_view.turns_survived = self.turn_count
                     self.window.show_view(game_over_view)
         self.message_logger.push_message(message)
         self.player_end_of_turn()
