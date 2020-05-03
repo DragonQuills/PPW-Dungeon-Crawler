@@ -6,13 +6,13 @@ The code to run the game is in Views/GameView.py
 
 from definitions import arcade, SCREEN_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT
 
-from Views.InstructionView import InstructionView
+from Views.TitleView import TitleView
 
 def main():
     """ Main method """
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    instruction_view = InstructionView()
-    window.show_view(instruction_view)
+    title_view = TitleView()
+    window.show_view(title_view)
     arcade.run()
 
 
