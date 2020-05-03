@@ -1,6 +1,6 @@
 '''
 Monster is the super-class that governs the behavior of monsters
-using the AI. Individual mosnters have different stats and colors.
+using the AI. Individual monsters have different stats and colors.
 '''
 
 from Actors.Actor import *

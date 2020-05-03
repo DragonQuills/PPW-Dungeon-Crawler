@@ -1,3 +1,9 @@
+'''
+MonsterAI is just a basic Bredth First Search to tell the monster
+what the fastest path to the player is. Currently it doesn't account for
+other monsters being in the way, since the Monster class handles that.
+'''
+
 from definitions import *
 from queue import Queue #for BFS
 import random # for shuffling the directional array
@@ -56,7 +62,7 @@ class MonsterAI:
             #get valid moves
             neighbors = []
             directions = [UP, DOWN, LEFT, RIGHT]
-            # Comment next line to make monsters follow player more directly
+            # So the monster prioritizes different directions
             random.shuffle(directions)
 
             for i in directions:
