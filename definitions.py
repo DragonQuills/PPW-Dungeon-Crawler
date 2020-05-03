@@ -48,7 +48,7 @@ NULL = [0, 0]
 
 # Sort of a difficulty level - lower turns b/w mean monsters spawn more often
 # while higher max monsters lets more monsters be on screen at once.
-# Spawn_distance is how close to the player the monster can be at minimum
+# TODO: Spawn_distance is how close to the player the monster can be at minimum
 # MONSTERS_AT_START is how many mosntres spawn at the very begining of the game
 TURNS_BETWEEN_MONSTER_SPAWN = 10
 MAX_MONSTERS = 5
