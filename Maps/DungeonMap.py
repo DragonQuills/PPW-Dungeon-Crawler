@@ -1,7 +1,8 @@
 from definitions import *
 
 class DungeonMap():
-    # Dungeon layout is currently hard-coded, I hope to fix this later
+    # Dungeon layout is currently hard-coded as a rectangle
+    # with walls around the outside and floor inside the walls
     def __init__(self):
         #create the array of what the tile types are
         self.grid = []
@@ -19,7 +20,7 @@ class DungeonMap():
 
     def update_dungeon(self, old_actors, new_actors):
         # remove previous positions of actors
-        if old_actors != []: #if we aren't just initializing the list for the first time
+        if old_actors != []: # if we aren't just initializing the list for the first time
             for actor in old_actors:
                 self.grid[actor.row][actor.col] = FLOOR
         # update the grid to track the positions of the actors
@@ -50,7 +51,6 @@ class DungeonMap():
             return self.grid[row][col]
         else: #outside of valid bounds is considered a wall.
             return WALL
-
 
     def draw(self):
         self.shape_list.draw()

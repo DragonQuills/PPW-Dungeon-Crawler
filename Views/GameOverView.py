@@ -9,6 +9,7 @@ to restart the game by clicking.
 class GameOverView(arcade.View):
     def __init__(self):
         super().__init__()
+        self.turns_survived = 0
 
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
@@ -18,18 +19,15 @@ class GameOverView(arcade.View):
         """
         Draw "Game over" across the screen.
         """
-        arcade.draw_text("Game Over", 240, 400, arcade.color.WHITE, 54)
-        arcade.draw_text("Click to restart", 310, 300, arcade.color.WHITE, 24)
+        arcade.draw_text("Game Over", SCREEN_WIDTH/2, SCREEN_HEIGHT - 1.5*SCREEN_HEIGHT/10, arcade.color.WHITE, 54, anchor_x="center")
+        arcade.draw_text("Click to restart", SCREEN_WIDTH/2, SCREEN_HEIGHT - 2.5*SCREEN_HEIGHT/10, arcade.color.WHITE, 24, anchor_x="center")
 
-        # arcade.draw_text(f"Time taken: {time_taken_formatted}",
-        #                  WIDTH/2,
-        #                  200,
-        #                  arcade.color.GRAY,
-        #                  font_size=15,
-        #                  anchor_x="center")
-
-        # output_total = f"Total Score: {self.window.total_score}"
-        # arcade.draw_text(output_total, 10, 10, arcade.color.WHITE, 14)
+        arcade.draw_text("You survived " + str(self.turns_survived) + " turns!",
+                         SCREEN_WIDTH/2,
+                         SCREEN_HEIGHT - 4*SCREEN_HEIGHT/10,
+                         arcade.color.WHITE,
+                         font_size=20,
+                         anchor_x="center")
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         game_view = GameView()
