@@ -39,7 +39,7 @@ def test_update_dungeon():
     player2 = Actor(2, 2, arcade.color.BLUE)
     map.update_dungeon([player],[player, player2])
     assert(map.grid[1][1] == ACTOR) #works with a multiple actors
-    assert(map.grid[2][2] == ACTOR) #works with a multiple actor
+    assert(map.grid[2][2] == ACTOR) #works with a multiple actors
 
     map.update_dungeon([player, player2], [player])
     assert(map.grid[1][1] == ACTOR) #works with a multiple actors
