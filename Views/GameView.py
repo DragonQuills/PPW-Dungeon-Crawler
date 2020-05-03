@@ -13,11 +13,11 @@ from Spawners.MonsterSpawner import MonsterSpawner
 
 """
 Main application class.
-All code for running through the game is in this class
+All code for running through the game is in this class.
 """
 class GameView(arcade.View):
 
-    def __init__(self): #, width, height, title):
+    def __init__(self):
         """
         Initializes things like the window size and background color
         and declares all class variables
@@ -26,8 +26,6 @@ class GameView(arcade.View):
 
         arcade.set_background_color(BACKGROUND_COLOR)
 
-        # If you have sprite lists, you should create them here,
-        # and set them to None
         self.map = None
 
         self.player = None
@@ -126,7 +124,7 @@ class GameView(arcade.View):
         Normally, you'll call update() on the sprite lists that
         need it.
         """
-        #this is needed by the map to replace the actor tiles with floor tiles
+        # This is needed by the map to replace the actor tiles with floor tiles
         old_actors = copy.deepcopy(self.actors_list)
 
         # If it is the player's turn and they pressed a valid key
@@ -136,7 +134,7 @@ class GameView(arcade.View):
                 # An arrow was pressed, so move
                 self.player_move(self.key_pressed, self.key_modifiers)
             else:
-                # Space was pressed, attack the square in fornt fo the player
+                # Space was pressed, attack the square in front for the player
                 attack_location = self.player.get_square_in_direction(self.player.facing)
                 defender = self.get_actor_at_position(attack_location[0], attack_location[1])
 
@@ -153,8 +151,9 @@ class GameView(arcade.View):
             # The move timer slows the monsters down so they don't all move at once
             self.monster_move_timer += 1
 
+            # Speeds up the monsters as there are more of them on the screen
             if self.monster_move_timer > 7 - len(self.monsters_list * 2):
-                # if there are still monsters who haven't taken their turn
+                # If there are still monsters who haven't taken their turn
                 if self.monster_turn < len(self.monsters_list):
                     moved_this_turn = self.monsters_list[self.monster_turn].move(self.player, self.map)
                     # If the monster didn't move this turn, it might be able to attack
@@ -162,7 +161,7 @@ class GameView(arcade.View):
                         # Get the row and col of the square the monster is facing
                         square_monster_is_facing = self.monsters_list[self.monster_turn].get_square_in_direction(self.monsters_list[self.monster_turn].facing)
 
-                        #if the monster is next to and facing the player
+                        # If the monster is next to and facing the player
                         if self.get_actor_at_position(square_monster_is_facing[0], square_monster_is_facing[1]) == self.player:
                             self.attack(self.monsters_list[self.monster_turn], self.player)
 
