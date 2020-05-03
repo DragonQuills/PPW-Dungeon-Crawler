@@ -1,3 +1,10 @@
+'''
+Actor is the parent class for anything that moves around the board
+such as monsters of the player. It handles the logic for
+movement, drawing, changing direction, and calculating damage,
+among other things.
+'''
+
 from definitions import *
 from random import randint
 

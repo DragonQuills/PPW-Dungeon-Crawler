@@ -1,3 +1,8 @@
+'''
+Monster is the super-class that governs the behavior of monsters
+using the AI. Individual mosnters have different stats and colors.
+'''
+
 from Actors.Actor import *
 from Behaviors.MonsterAI import MonsterAI
 
@@ -23,7 +28,7 @@ class Monster(Actor):
         else:
             self.facing = self.determine_direction(next_move.row, next_move.col)
 
-        #Checking for collisions with other monsters
+        # Checking for collisions with other monsters
         if dungeon_map.grid[next_move.row][next_move.col] == FLOOR:
             self.row = next_move.row
             self.col = next_move.col

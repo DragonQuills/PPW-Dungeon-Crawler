@@ -1,8 +1,8 @@
 """
 This information is used throughout the application
 and every class needs access to arcade at a minimum
-o it's all in this file instead of me having to
-seperately import or define thes things is multiple
+so it's all in this file instead of me having to
+seperately import or define these things in multiple
 places.
 """
 
