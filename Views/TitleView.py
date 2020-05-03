@@ -17,6 +17,9 @@ class TitleView(arcade.View):
         arcade.draw_text("Made by Kayden Adams", SCREEN_WIDTH/2, SCREEN_HEIGHT - 5*SCREEN_HEIGHT/10,
                          arcade.color.OLD_SILVER, font_size=30, anchor_x="center")
 
+        arcade.draw_text("Click anywhere to start.", SCREEN_WIDTH/2, SCREEN_HEIGHT - 9*SCREEN_HEIGHT/10,
+                         arcade.color.OLD_SILVER, font_size=20, anchor_x="center")
+
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         instruction_view = InstructionView()
